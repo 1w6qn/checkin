@@ -96,7 +96,7 @@ export interface PlayerDataModel {
     trainingGround?: any
 }
 export interface PlayerActivity {
-    LOGIN_ONLY: {};
+    LOGIN_ONLY: {[key: string]:PlayerActivity.PlayerLoginOnlyTypeActivity};
     CHECKIN_ONLY: { [key: string]:PlayerActivity.PlayerCheckinOnlyTypeActivity };
     TYPE_ACT9D0: {};
     AVG_ONLY: {};
@@ -171,6 +171,9 @@ export namespace PlayerActivity {
         "matrix": Matrix[],
         "bestRatio": number,
         "bestSegments": number[]
+    }
+    export interface PlayerLoginOnlyTypeActivity{
+        reward:number
     }
 
 }
