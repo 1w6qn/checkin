@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {} from 'lodash'
 
 import {PlayerDataDelta, PlayerDataModel} from 'dto';
 import config from "./config.json"
@@ -11,7 +10,7 @@ import {
     mergeDict,
     log,
     decryptBattleReplay,
-    encryptIsCheat, encryptBattleData, get_md5, getBattleDataAccess
+    encryptIsCheat, encryptBattleData, get_md5, getBattleDataAccess, sleep
 } from "./utils";
 import {
     AccountLoginRequest,
@@ -33,6 +32,15 @@ class Player {
     seqnum: number;
     secret: string;
     server: string;
+    config: {
+        battleLog: {
+            [key: string]: {
+                stats: any
+                isCheat: string
+                completeTime: number
+            }
+        }
+    }
     data!: PlayerDataModel;
 
     constructor(server = "cn") {
@@ -40,9 +48,11 @@ class Player {
         this.secret = ""
         this.uid = ""
         this.server = server;
+        this.config = (<{ [key: string]: any }>config)[get_md5(phone)]
     }
 
     async init(phone: string, pwd: string) {
+        await import("./config.json")
         const resv = await get_res_version();
         log(`assetsVersion:${resv.resVersion}, clientVersion:${resv.clientVersion}`);
         const {deviceId, deviceId2, deviceId3} = get_random_devices()
@@ -181,9 +191,9 @@ class Player {
         const {battleReplay} = await this.post<
             { stageId: string }, { battleReplay: string }
         >("/quest/getBattleReplay", {stageId})
-        log("获取到录像",stageId)
+        log("获取到录像", stageId)
         const battleLog = await decryptBattleReplay(battleReplay)
-        const {battleId}=await this.post<any,QuestBattleStartResponse>("/quest/battleStart", {
+        const {battleId} = await this.post<any, QuestBattleStartResponse>("/quest/battleStart", {
             isRetro: 0,
             pry: 0,
             battleType: 0,
@@ -193,15 +203,15 @@ class Player {
             squad: {
                 squadId: "0",
                 name: null,
-                slots: new Array(12).fill(null).map((_,i)=>{
-                    if(i>=battleLog.journal.squad.length){
+                slots: new Array(12).fill(null).map((_, i) => {
+                    if (i >= battleLog.journal.squad.length) {
                         return null
                     }
-                    const {charInstId,skillIndex,uniequipId}=battleLog.journal.squad[i]
+                    const {charInstId, skillIndex, uniequipId} = battleLog.journal.squad[i]
                     return {
                         charInstId,
                         skillIndex,
-                        currentEquip: uniequipId
+                        currentEquip: uniequipId || null
                     }
                 })
             },
@@ -209,13 +219,13 @@ class Player {
             isReplay: 1,
             startTs: now()
         })
-        log("战斗开始",stageId,battleId)
-        const battleStats=config["5d78668f18221717469556fe8a5ed85e"].battleLog[stageId]
-        battleStats.stats.access=getBattleDataAccess(this.data.pushFlags.status)
-        battleStats.isCheat=encryptIsCheat(battleId)
-        battleStats.stats.beginTs=now()
-        battleStats.stats.endTs=now()+battleStats.completeTime
-        const battleData={
+        log("战斗开始", stageId, battleId)
+        const battleStats = this.config.battleLog[stageId]
+        battleStats.stats.access = getBattleDataAccess(this.data.pushFlags.status)
+        battleStats.isCheat = encryptIsCheat(battleId)
+        battleStats.stats.beginTs = now()
+        battleStats.stats.endTs = now() + battleStats.completeTime
+        const battleData = {
             battleId,
             interrupt: 0,
             giveUp: 0,
@@ -227,17 +237,16 @@ class Player {
             currentIndex: 0,
             platform: 1
         }
-
-        const res=await this.post("/quest/battleFinish", {
-            data: encryptBattleData(battleData,this.data.pushFlags.status),
+        await sleep(battleStats.completeTime * 1000)
+        const res = await this.post("/quest/battleFinish", {
+            data: encryptBattleData(battleData, this.data.pushFlags.status),
             battleData: {
                 stats: {},
                 isCheat: encryptIsCheat(battleId),
                 completeTime: 0
             }
         })
-        log("战斗结束",battleId)
-        log(res)
+        log("战斗结束", battleId)
     }
 
     async auto_building() {
@@ -302,7 +311,7 @@ class Player {
             platform: 1
         })
         log("data synced,uid:", this.uid)
-        log(this.data.status)
+        log(this.data.status.nickName, "#", this.data.status.nickNumber)
     }
 
     merge(delta: PlayerDataDelta) {
@@ -371,6 +380,7 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
 async function bootstrap() {
     const p = new Player()
     await p.init(phone, pwd)
+    /*
     await p.auto_checkin()
     await p.auto_campaign()
     await p.auto_mail()
@@ -380,6 +390,7 @@ async function bootstrap() {
     await p.auto_building()
     await p.auto_social()
     await p.auto_buy()
+    */
     await p.auto_replay()
 }
 
