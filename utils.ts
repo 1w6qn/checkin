@@ -86,7 +86,33 @@ export async function decryptBattleReplay(battleReplay: string): Promise<BattleL
     const zip = await new JSZip().loadAsync(data)
     return JSON.parse(await zip.files["default_entry"].async("string"));
 }
+export function randomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+export function randomChoices<T>(arr: T[], weights: number[], k: number): T[] {
+    const result: T[] = [];
+    for (let i = 0; i < k; i++) {
+        const totalWeight = weights.reduce((a, b) => a + b, 0);
+        let random = Math.random() * totalWeight;
+        for (let j = 0; j < arr.length; j++) {
+            random -= weights[j];
+            if (random <= 0) {
+                result.push(arr[j]);
+                break;
+            }
+        }
+    }
+    return result;
+}
+
+export function randomSample<T>(arr: T[], k: number): T[] {
+    return arr.sort(() => 0.5 - Math.random()).slice(0, k);
+}
+
+export function randomChoice<T>(arr: T[]): T {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
 export function sleep(time: number) {
     return new Promise(resolve =>
         setTimeout(resolve, time)
@@ -96,7 +122,124 @@ export function sleep(time: number) {
 export const log = console.log
 
 export function select_tags(tags: number[]): [number[], number, number] {
-    let selected: number[] = [], sp = 0, duration_ = 0
-
+    let selected: number[] = [], sp = 0, duration_ = 32400
+    if (tags.includes(11)) {
+        sp = 11;  // 6
+    } else if (tags.includes(14)) {
+        sp = 14;  // 5
+        selected = [14];
+    } else if (tags.includes(27)) {
+        selected = [27];
+    } else if (tags.includes(7) && tags.includes(12)) {
+        selected = [7, 12];
+    } else if (tags.includes(7) && tags.includes(20)) {
+        selected = [7, 20];
+    } else if (tags.includes(7) && tags.includes(23)) {
+        selected = [7, 23];
+    } else if (tags.includes(7) && tags.includes(24)) {
+        selected = [7, 24];
+    } else if (tags.includes(26) && tags.includes(19)) {
+        selected = [26, 19];
+    } else if (tags.includes(26) && tags.includes(22)) {
+        selected = [26, 22];
+    } else if (tags.includes(26) && tags.includes(3)) {
+        selected = [26, 3];
+    } else if (tags.includes(26) && tags.includes(23)) {
+        selected = [26, 23];
+    } else if (tags.includes(25) && tags.includes(12)) {
+        selected = [25, 12];
+    } else if (tags.includes(25) && tags.includes(24)) {
+        selected = [25, 24];
+    } else if (tags.includes(21) && tags.includes(24)) {
+        selected = [21, 24];
+    } else if (tags.includes(9) && tags.includes(24)) {
+        selected = [9, 24];
+    } else if (tags.includes(4) && tags.includes(24)) {
+        selected = [4, 24];
+    } else if (tags.includes(13) && tags.includes(21)) {
+        selected = [13, 21];
+    } else if (tags.includes(13) && tags.includes(6)) {
+        selected = [4, 24];
+    } else if (tags.includes(13) && tags.includes(19) && tags.includes(10)) {
+        selected = [13, 19, 10];
+    } else if (tags.includes(13) && tags.includes(19) && tags.includes(2)) {
+        selected = [13, 19, 2];
+    } else if (tags.includes(12) && tags.includes(8)) {
+        selected = [12, 8];
+    } else if (tags.includes(12) && tags.includes(18)) {
+        selected = [12, 18];
+    } else if (tags.includes(12) && tags.includes(23)) {
+        selected = [12, 23];
+    } else if (tags.includes(16) && tags.includes(8)) {
+        selected = [16, 8];
+    } else if (tags.includes(16) && tags.includes(18)) {
+        selected = [16, 18];
+    } else if (tags.includes(16) && tags.includes(5)) {
+        selected = [16, 5];
+    } else if (tags.includes(16) && tags.includes(20)) {
+        selected = [16, 20];
+    } else if (tags.includes(15) && tags.includes(6)) {
+        selected = [15, 6];
+    } else if (tags.includes(15) && tags.includes(19)) {
+        selected = [15, 19];
+    } else if (tags.includes(23) && tags.includes(19) && tags.includes(6)) {
+        selected = [23, 19, 6];
+    } else if (tags.includes(19) && tags.includes(5)) {
+        selected = [19, 5];
+    } else if (tags.includes(19) && tags.includes(21)) {
+        selected = [19, 21];
+    } else if (tags.includes(19) && tags.includes(3)) {
+        selected = [19, 3];
+    } else if (tags.includes(22) && tags.includes(1)) {
+        selected = [22, 1];
+    } else if (tags.includes(22) && tags.includes(6)) {
+        selected = [22, 6];
+    } else if (tags.includes(22) && tags.includes(10)) {
+        selected = [22, 10];
+    } else if (tags.includes(22) && tags.includes(21)) {
+        selected = [22, 21];
+    } else if (tags.includes(20) && tags.includes(22)) {
+        selected = [20, 22];
+    } else if (tags.includes(20) && tags.includes(3)) {
+        selected = [20, 3];
+    } else if (tags.includes(20) && tags.includes(5)) {
+        selected = [20, 5];
+    } else if (tags.includes(7)) {
+        selected = [7];  // 4
+    } else if (tags.includes(26)) {
+        selected = [26];
+    } else if (tags.includes(24)) {
+        selected = [24];
+    } else if (tags.includes(25)) {
+        selected = [25];
+    } else if (tags.includes(12)) {
+        selected = [12];
+    } else if (tags.includes(13)) {
+        selected = [13];
+    } else if (tags.includes(16)) {
+        selected = [16];
+    } else if (tags.includes(15) && tags.includes(8)) {
+        selected = [15, 8];
+    } else if (tags.includes(15) && tags.includes(18)) {
+        selected = [15, 18];
+    } else if (tags.includes(15) && tags.includes(5)) {
+        selected = [15, 5];
+    } else if (tags.includes(15) && tags.includes(23)) {
+        selected = [15, 23];
+    } else if (tags.includes(20) && tags.includes(2)) {
+        selected = [20, 2];
+    } else if (tags.includes(20) && tags.includes(10)) {
+        selected = [20, 10];
+    } else if (tags.includes(23) && tags.includes(19) && tags.includes(2)) {
+        selected = [23, 19, 6];
+    } else if (tags.includes(23) && tags.includes(6)) {
+        selected = [23, 6];
+    } else if (tags.includes(23) && tags.includes(2)) {
+        selected = [23, 2];
+    } else if (tags.includes(23) && tags.includes(9)) {
+        selected = [23, 9];
+    } else if (tags.includes(23) && tags.includes(1)) {
+        selected = [23, 1];
+    }
     return [selected, sp, duration_]
 }

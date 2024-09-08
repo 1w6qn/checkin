@@ -10,7 +10,11 @@ import {
     mergeDict,
     log,
     decryptBattleReplay,
-    encryptIsCheat, encryptBattleData, get_md5, getBattleDataAccess, sleep
+    encryptIsCheat,
+    encryptBattleData,
+    get_md5,
+    getBattleDataAccess,
+    sleep
 } from "./utils";
 import {
     AccountLoginRequest,
@@ -23,6 +27,7 @@ import {
     PlayerDeltaResponse, QuestBattleStartResponse,
     ResVersionResponse
 } from "./models";
+
 
 const phone = process.argv[2];
 const pwd = process.argv[3];
@@ -424,6 +429,8 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
 }
 
 async function bootstrap() {
+
+
     const p = new Player()
     await p.init(phone, pwd)
     await p.auto_checkin()
@@ -432,15 +439,14 @@ async function bootstrap() {
     await p.auto_building()
     await p.auto_social()
     await p.auto_buy()
-    //await p.auto_recruit()
-
+    await p.auto_recruit()
     await p.auto_campaign()
-
     while (p.data.status.ap>=21){
         log(p.data.status.ap)
         await p.auto_replay("act36side_07",21)
     }
     await p.auto_confirm_missions()
 }
+
 bootstrap();
 
