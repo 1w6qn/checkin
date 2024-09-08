@@ -348,7 +348,7 @@ class Player {
             await this.post('/building/assignChar', {"roomSlotId": "slot_9", "charInstIdList": [5, 205, 15, 33, 204]})
             await this.post('/building/assignChar', {"roomSlotId": "slot_3", "charInstIdList": [24, 201, 141, 11, 46]})
         }
-
+        log("[building] assign chars")
     }
 
     async auto_gacha() {
@@ -482,8 +482,10 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
 }
 
 async function bootstrap() {
-
-
+    if(!phone || !pwd){
+        log("error: no phone or pwd")
+        return
+    }
     const p = new Player()
     await p.init(phone, pwd)
     await p.auto_checkin()

@@ -19,7 +19,7 @@
     "typescript": "^5.5.2"
   },
   "scripts": {
-    "start": "tsc && nodemon index.ts --ext ts",
+    "start": "ts-node index.ts",
     "build": "tsc"
   }
 }
