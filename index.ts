@@ -27,6 +27,7 @@ import {
     PlayerDeltaResponse, QuestBattleStartResponse,
     ResVersionResponse
 } from "./models";
+import moment from "moment";
 
 
 const phone = process.argv[2];
@@ -176,11 +177,30 @@ class Player {
                 j += 1
             }
         }
+        /*
+        if(this.data.building.rooms.MEETING["slot_36"].receiveStock){
+            await this.post('/building/receiveClueToStock', {
+                clues:this.data.building.rooms.MEETING["slot_36"].receiveStock.map(v=>v.id)
+            })
+            log("[building] receive clue to stock")
+        }
+
+         */
+        for (const stock of this.data.building.rooms.MEETING["slot_36"].ownStock) {
+            if(!Object.keys(this.data.building.rooms.MEETING["slot_36"].board).includes(stock.type)){
+                await this.post('/building/putClueToTheBoard', {clueId:stock.id})
+                log("[building] put",stock.type,"to the board")
+            }
+        }
+
         if (Object.keys(this.data.building.rooms.MEETING["slot_36"].board).length == 7) {
             await this.post('/building/startInfoShare', {})
+            log("[building] startInfoShare")
         }
         if (this.data.social.yesterdayReward.canReceive) {
             await this.post("/social/receiveSocialPoint", {})
+            log("[building] receiveSocialPoint")
+
         }
 
     }
@@ -293,7 +313,41 @@ class Player {
             slotList: Object.keys(this.data.building.rooms.TRADING)
         })
         log("[building] deliveryBatchOrder")
-
+        if(moment().diff(moment([2024,9,7]),"days")%2==0){
+            await this.post('/building/assignChar', {"roomSlotId": "slot_34", "charInstIdList": [244, 224, 257, 134, 132]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_26", "charInstIdList": [27]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_25", "charInstIdList": [46, 53, 205]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_24", "charInstIdList": [24, 201, 204]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_28", "charInstIdList": [193, 249, 165, 9, 253]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_36", "charInstIdList": [213, 160]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_16", "charInstIdList": [263]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_15", "charInstIdList": [141, 11, 22]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_14", "charInstIdList": [28, 29, 50]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_20", "charInstIdList": [60, 179, 94, 217, 97]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_23", "charInstIdList": [79]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_7", "charInstIdList": [98]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_6", "charInstIdList": [5, 2, 34]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_5", "charInstIdList": [15, 33, 92]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_9", "charInstIdList": [240, 10, 28, 12, 19]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_3", "charInstIdList": [42, 206, 178, 29, 50]})
+        }else{
+            await this.post('/building/assignChar', {"roomSlotId": "slot_34", "charInstIdList": [128, 190, 170, 278, 280]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_26", "charInstIdList": [193]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_25", "charInstIdList": [249, 165, 9]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_24", "charInstIdList": [124, 135, 93]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_28", "charInstIdList": [192, 92, 151, 213, 27]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_36", "charInstIdList": [253, 60]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_16", "charInstIdList": [179]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_15", "charInstIdList": [94, 217, 97]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_14", "charInstIdList": [28, 29, 50]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_20", "charInstIdList": [263, 98, 79, 160, 34]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_23", "charInstIdList": [240]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_7", "charInstIdList": [10]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_6", "charInstIdList": [2, 12, 19]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_5", "charInstIdList": [42, 206, 178]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_9", "charInstIdList": [5, 205, 15, 33, 204]})
+            await this.post('/building/assignChar', {"roomSlotId": "slot_3", "charInstIdList": [24, 201, 141, 11, 46]})
+        }
 
     }
 
@@ -317,11 +371,10 @@ class Player {
                 continue
             }
             if ((good.price <= this.data.status.socialPoint) && good.availCount) {
-                let r=await this.post("/shop/buySocialGood", {
+                await this.post("/shop/buySocialGood", {
                     goodId: good.goodId,
                     count: 1
                 })
-                log(r)
                 log(`[信用商店]购买 ${good.goodId}*${good.availCount}`)
                 log(`[信用商店]消耗 ${good.price} 信用点`)
 

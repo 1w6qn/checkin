@@ -569,7 +569,7 @@
           "packedRuneDataList": null,
           "autoReplayCancelled": 0
         },
-        "isCheat": "bTs4aDo9PTc0PTdtOzQ4OGxtND8/OTc0bT44amxsbD8+aT4+",
+        "isCheat": "",
         "completeTime": 73
       },
       "act36side_07": {
@@ -1144,8 +1144,11 @@
           "packedRuneDataList": null,
           "autoReplayCancelled": 0
         },
-        "isCheat": "bDxtPD9sNzc0PWs9bDQ4OGxtNGk7Pms0Nz5qbT46PEA4aDxq",
+        "isCheat": "",
         "completeTime": 107
+      },
+      "building": {
+
       }
     }
   }
