@@ -173,7 +173,7 @@ class Player {
         for (const id of id_list) {
             if (j < 10) {
                 await this.post('/building/visitBuilding', {friendId: id.uid})
-                log("visit",id.uid)
+                log("[building] visit",id.uid)
                 j += 1
             }
         }
