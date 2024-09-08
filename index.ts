@@ -50,7 +50,23 @@ class Player {
         this.server = server;
         this.config = (<{ [key: string]: any }>config)[get_md5(phone)]
     }
+    printStatus(){
+        const status=this.data.status
+        log(`${status.nickName}#${status.nickNumber}`)
+        log(`uid：${status.uid}`)
+        log(`等级：${status.level}(${status.exp})/120`)
+        log(`理智：${status.ap}/${status.maxAp}`)
+        log(`源石：${status.androidDiamond}`)
+        log(`赤金：${status.gold}`)
+        log(`签名：${status.resume}`)
+        log(`助理：${status.secretary}`)
+        log(`信用点：${status.socialPoint}`)
+        log(`绿票：${status.lggShard}`)
+        log(`黄票：${status.hggShard}`)
+        log(`公招券：${status.recruitLicense}`)
 
+
+    }
     async init(phone: string, pwd: string) {
         await import("./config.json")
         const resv = await get_res_version();
@@ -77,24 +93,31 @@ class Player {
     async auto_checkin() {
         if (this.data.checkIn.canCheckIn) {
             await this.post('/user/checkIn', {})
+            log("已完成签到")
         }
         for (const [activityId, v] of Object.entries(this.data.activity.LOGIN_ONLY)) {
+            log("发现LOGIN_ONLY活动",activityId)
             if (v.reward) {
                 await this.post('/activity/loginOnly/getReward', {activityId})
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.CHECKIN_ONLY)) {
+            log("发现CHECKIN_ONLY活动",activityId)
             for (const v1 of v.history) {
-                const index = v.history.indexOf(v1);
-                await this.post('/activity/getActivityCheckInReward', {activityId, index})
+                if(v1){
+                    const index = v.history.indexOf(v1);
+                    await this.post('/activity/getActivityCheckInReward', {activityId, index})
+                }
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.CHECKIN_ACCESS)) {
+            log("发现CHECKIN_ACCESS活动",activityId)
             if (v.currentStatus) {
                 await this.post('/activity/actCheckinAccess/getCheckInReward', {activityId})
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.GRID_GACHA_V2)) {
+            log("发现GRID_GACHA_V2活动",activityId)
             if (!v.today.done) {
                 await this.post('/activity/gridGachaV2/doTodayGacha', {activityId})
             }
@@ -144,6 +167,7 @@ class Player {
         for (const id of id_list) {
             if (j < 10) {
                 await this.post('/building/visitBuilding', {friendId: id.uid})
+                log("visit",id.uid)
                 j += 1
             }
         }
@@ -186,8 +210,10 @@ class Player {
         }
     }
 
-    async auto_replay() {
-        const stageId = "main_01-07"
+    async auto_replay(stageId:string,apCost:number) {
+        if(this.data.status.ap<apCost){
+            return
+        }
         const {battleReplay} = await this.post<
             { stageId: string }, { battleReplay: string }
         >("/quest/getBattleReplay", {stageId})
@@ -243,7 +269,7 @@ class Player {
             battleData: {
                 stats: {},
                 isCheat: encryptIsCheat(battleId),
-                completeTime: 0
+                completeTime: battleStats.completeTime
             }
         })
         log("战斗结束", battleId)
@@ -251,19 +277,25 @@ class Player {
 
     async auto_building() {
         await this.post("/building/gainAllIntimacy", {})
+        log("[building] gainAllIntimacy")
         await this.post('/building/settleManufacture', {
             roomSlotIdList: Object.keys(this.data.building.rooms.MANUFACTURE),
             supplement: 1
         })
+        log("[building] settleManufacture")
+
         await this.post("/building/deliveryBatchOrder", {
             slotList: Object.keys(this.data.building.rooms.TRADING)
         })
+        log("[building] deliveryBatchOrder")
+
 
     }
 
     async auto_gacha() {
         for (const [poolId, v] of Object.entries(this.data.gacha.limit)) {
             if (v.leastFree) {
+                log("发现每日单抽",poolId)
                 await this.post("/gacha/advancedGacha", {
                     poolId,
                     useTkt: 3,
@@ -276,11 +308,18 @@ class Player {
     async auto_buy() {
         const res = (await this.post<{}, GetSocialGoodListResponse>("/shop/getSocialGoodList", {}))
         for (const good of res.goodList.sort((a, b) => a.price - b.price)) {
-            if (good.price <= this.data.status.socialPoint && good.availCount) {
-                await this.post("/shop/buySocialGood", {
+            if(this.data.shop.SOCIAL.info.some(v=>v.id==good.goodId)){
+                continue
+            }
+            if ((good.price <= this.data.status.socialPoint) && good.availCount) {
+                let r=await this.post("/shop/buySocialGood", {
                     goodId: good.goodId,
-                    count: good.availCount
+                    count: 1
                 })
+                log(r)
+                log(`[信用商店]购买 ${good.goodId}*${good.availCount}`)
+                log(`[信用商店]消耗 ${good.price} 信用点`)
+
             } else {
                 break
             }
@@ -288,8 +327,8 @@ class Player {
     }
 
     async auto_campaign() {
-        const stage_id = this.data.campaignsV2.open.rotate
-        if (this.data.campaignsV2.sweepMaxKills[stage_id] != 400) {
+        const stageId = this.data.campaignsV2.open.rotate
+        if (this.data.campaignsV2.sweepMaxKills[stageId] != 400) {
             return
         }
         if (this.data.campaignsV2.campaignCurrentFee >= this.data.campaignsV2.campaignCurrentFee) {
@@ -298,12 +337,13 @@ class Player {
         if (!Object.values(this.data.consumable["EXTERMINATION_AGENT"]).some((v) => v.count > 0)) {
             return
         }
-        const [inst_id] = Object.entries(this.data.consumable["EXTERMINATION_AGENT"]).find(([k, v]) => v.count > 0)!
+        const [instId] = Object.entries(this.data.consumable["EXTERMINATION_AGENT"]).find(([k, v]) => v.count > 0)!
         await this.post<any, any>("/campaignV2/battleSweep", {
-            stageId: stage_id,
+            stageId,
             itemId: "EXTERMINATION_AGENT",
-            instId: inst_id
+            instId
         })
+        log("完成剿灭扫荡",stageId)
     }
 
     async syncData() {
@@ -311,7 +351,7 @@ class Player {
             platform: 1
         })
         log("data synced,uid:", this.uid)
-        log(this.data.status.nickName, "#", this.data.status.nickNumber)
+        this.printStatus()
     }
 
     merge(delta: PlayerDataDelta) {
@@ -329,19 +369,25 @@ class Player {
             'Connection': 'Keep-Alive'
         }
         const url = 'https://ak-gs-gf.hypergryph.com' + cgi;
-        const response = await axios.post(url, data, {headers: headers});
-        if (response.headers['seqnum'] && !isNaN(Number(response.headers['seqnum']))) {
-            this.seqnum = Number(response.headers['seqnum'])
-        } else {
-            this.seqnum += 1;
+        try{
+            const response = await axios.post(url, data, {headers: headers});
+            if (response.headers['seqnum'] && !isNaN(Number(response.headers['seqnum']))) {
+                this.seqnum = Number(response.headers['seqnum'])
+            } else {
+                this.seqnum += 1;
+            }
+            if (response.data.user !== undefined) {
+                this.data = response.data.user
+            }
+            if (response.data.playerDataDelta !== undefined) {
+                this.merge(response.data.playerDataDelta)
+            }
+            return response.data;
+        }catch (e) {
+            log(e)
         }
-        if (response.data.user !== undefined) {
-            this.data = response.data.user
-        }
-        if (response.data.playerDataDelta !== undefined) {
-            this.merge(response.data.playerDataDelta)
-        }
-        return response.data;
+        return {} as T
+
     }
 }
 
@@ -380,18 +426,21 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
 async function bootstrap() {
     const p = new Player()
     await p.init(phone, pwd)
-    /*
     await p.auto_checkin()
-    await p.auto_campaign()
     await p.auto_mail()
-    await p.auto_recruit()
-    await p.auto_confirm_missions()
     await p.auto_gacha()
     await p.auto_building()
     await p.auto_social()
     await p.auto_buy()
-    */
-    await p.auto_replay()
-}
+    //await p.auto_recruit()
 
+    await p.auto_campaign()
+
+    while (p.data.status.ap>=21){
+        log(p.data.status.ap)
+        await p.auto_replay("act36side_07",21)
+    }
+    await p.auto_confirm_missions()
+}
 bootstrap();
+

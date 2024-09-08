@@ -10,7 +10,7 @@ export function now() {
     return moment().unix()
 }
 
-export function get_md5(str: string) {
+export function get_md5(str: string):string {
     return crypto.createHash('md5').update(str).digest('hex');
 }
 
