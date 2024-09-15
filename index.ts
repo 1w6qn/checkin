@@ -93,7 +93,7 @@ class Player {
             deviceId2,
             deviceId3
         })).secret
-        log(`secret:${this.secret}`);
+        log(`[main] secret`,this.secret);
         await this.syncData()
     }
 
@@ -140,21 +140,11 @@ class Player {
     }
 
     async auto_mail() {
-        const mail_list = (await this.post<{ from: number }, MailGetMetaInfoListResponse>('/mail/getMetaInfoList', {
+        const mailMetaInfoList = (await this.post<{ from: number }, MailGetMetaInfoListResponse>('/mail/getMetaInfoList', {
             from: now()
-        })).result
-        const mailIdList: number[] = []
-        const sysMailIdList: number[] = []
-        mail_list.forEach((mail) => {
-            if (mail.state || !mail.hasItem) {
-                return;
-            }
-            if (mail.type) {
-                sysMailIdList.push(mail.mailId)
-            } else {
-                mailIdList.push(mail.mailId)
-            }
-        })
+        })).result.filter((mail)=>(mail.state || !mail.hasItem))
+        const mailIdList: number[] = mailMetaInfoList.filter((mail)=>mail.type).map((mail)=>mail.mailId)
+        const sysMailIdList: number[] = mailMetaInfoList.filter((mail)=>!mail.type).map((mail)=>mail.mailId)
         if (mailIdList || sysMailIdList) {
             log("发现未领取邮件")
             await this.post('/mail/receiveAllMail', {
@@ -523,7 +513,7 @@ async function bootstrap() {
     await p.auto_recruit()
     await p.auto_campaign()
     while (p.data.status.ap>=21){
-        log(p.data.status.ap)
+        log("[main] ap remain:",p.data.status.ap)
         await p.auto_replay("act36side_07",21)
     }
     await p.auto_confirm_missions()
