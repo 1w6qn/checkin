@@ -43,6 +43,7 @@ class Player {
         enableRecruit:boolean
         enableBattle:boolean
         assignChars:boolean
+        battleStage:string
         battleLog: {
             [key: string]: {
                 stats: any
@@ -251,7 +252,7 @@ class Player {
         const {battleReplay} = await this.post<
             { stageId: string }, { battleReplay: string }
         >("/quest/getBattleReplay", {stageId})
-        log("获取到录像", stageId)
+        log("[battle]获取到录像", stageId)
         const battleLog = await decryptBattleReplay(battleReplay)
         const {battleId} = await this.post<any, QuestBattleStartResponse>("/quest/battleStart", {
             isRetro: 0,
@@ -279,7 +280,7 @@ class Player {
             isReplay: 1,
             startTs: now()
         })
-        log("战斗开始", stageId, battleId)
+        log("[battle]战斗开始", stageId, battleId)
         const battleStats = this.config.battleLog[stageId]
         battleStats.stats.access = getBattleDataAccess(this.data.pushFlags.status)
         battleStats.isCheat = encryptIsCheat(battleId)
@@ -306,7 +307,7 @@ class Player {
                 completeTime: battleStats.completeTime
             }
         })
-        log("战斗结束", battleId)
+        log("[battle]战斗结束", battleId)
     }
 
     async auto_building() {
@@ -346,7 +347,7 @@ class Player {
                 ...acc
             }
         },{} as {[key:number]:string})
-        let c=Object.entries(this.data.building.roomSlots)
+        let c=Object.entries(this.data.building.roomSlots).filter(([_,v])=>v.charInstIds)
             .reduce((acc,[slotId,slot])=>{
             return {
                 [slotId]:slot.charInstIds.map((v)=> m[v]||""),
@@ -523,7 +524,7 @@ async function bootstrap() {
     if(p.config.enableBattle){
         while (p.data.status.ap>=21){
             log("[main] ap remain:",p.data.status.ap)
-            await p.auto_replay("act36side_07",21)
+            await p.auto_replay(p.config.battleStage,21)
         }
     }
     await p.auto_confirm_missions()

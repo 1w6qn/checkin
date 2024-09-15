@@ -4,6 +4,7 @@
     "enableBattle": true,
     "assignChars": true,
     "enableBetterLog": false,
+    "battleStage": "act36side_07",
     "battleLog": {
       "main_01-07": {
         "stats": {
@@ -1124,10 +1125,7 @@
           "totalHeal": 4281.78,
           "totalDamage": 183297.8,
           "fixedPlayTime": 215666,
-          "extraInfo": {
-            "8": "id=8|name=BlueStacksX86",
-            "100": "id=1|seq=51|pid=3115|time=1725750966"
-          },
+          "extraInfo": {},
           "extraBattleInfo": {
             "KILL_COUNT,char_4087_ines": 7,
             "KILL_COUNT,trap_173_slfrut": 3,
