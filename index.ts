@@ -410,7 +410,7 @@ class Player {
             itemId: "EXTERMINATION_AGENT",
             instId
         })
-        log("完成剿灭扫荡",stageId)
+        log("[battle] 完成剿灭扫荡",stageId)
     }
 
     async syncData() {

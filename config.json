@@ -4,7 +4,7 @@
     "enableBattle": true,
     "assignChars": true,
     "enableBetterLog": false,
-    "battleStage": "act36side_07",
+    "battleStage": "main_01-07",
     "battleLog": {
       "main_01-07": {
         "stats": {
