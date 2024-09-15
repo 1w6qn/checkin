@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 import {PlayerDataDelta, PlayerDataModel} from 'dto';
 import config from "./config.json"
@@ -28,6 +28,7 @@ import {
     ResVersionResponse
 } from "./models";
 import moment from "moment";
+import {floor} from "lodash";
 
 
 const phone = process.argv[2];
@@ -75,8 +76,8 @@ class Player {
     }
     async init(phone: string, pwd: string) {
         await import("./config.json")
-        const resv = await get_res_version();
-        log(`assetsVersion:${resv.resVersion}, clientVersion:${resv.clientVersion}`);
+        const resVersion = await get_res_version();
+        log(`assetsVersion:${resVersion.resVersion}, clientVersion:${resVersion.clientVersion}`);
         const {deviceId, deviceId2, deviceId3} = get_random_devices()
         const {token, uid} = await get_token(deviceId, deviceId2, deviceId3, phone, pwd);
         this.uid = uid
@@ -85,8 +86,8 @@ class Player {
             networkVersion: "5",
             uid,
             token,
-            assetsVersion: resv.resVersion,
-            clientVersion: resv.clientVersion,
+            assetsVersion: resVersion.resVersion,
+            clientVersion: resVersion.clientVersion,
             platform: 1,
             deviceId,
             deviceId2,
@@ -103,16 +104,22 @@ class Player {
         }
         for (const [activityId, v] of Object.entries(this.data.activity.LOGIN_ONLY)) {
             log("发现LOGIN_ONLY活动",activityId)
+
             if (v.reward) {
                 await this.post('/activity/loginOnly/getReward', {activityId})
+                log("[activity][LOGIN_ONLY] getReward",activityId)
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.CHECKIN_ONLY)) {
             log("发现CHECKIN_ONLY活动",activityId)
+            if (v.dynOpt){
+                continue
+            }
             for (const v1 of v.history) {
                 if(v1){
                     const index = v.history.indexOf(v1);
                     await this.post('/activity/getActivityCheckInReward', {activityId, index})
+                    log("[activity][CHECKIN_ONLY] getReward",activityId, index)
                 }
             }
         }
@@ -120,12 +127,14 @@ class Player {
             log("发现CHECKIN_ACCESS活动",activityId)
             if (v.currentStatus) {
                 await this.post('/activity/actCheckinAccess/getCheckInReward', {activityId})
+                log("[activity][CHECKIN_ACCESS] getReward",activityId)
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.GRID_GACHA_V2)) {
             log("发现GRID_GACHA_V2活动",activityId)
             if (!v.today.done) {
                 await this.post('/activity/gridGachaV2/doTodayGacha', {activityId})
+                log("[activity][GRID_GACHA_V2] doTodayGacha",activityId)
             }
         }
     }
@@ -207,7 +216,9 @@ class Player {
 
     async auto_confirm_missions() {
         await this.post("/mission/autoConfirmMissions", {type: "DAILY"})
+        log("[任务]已领取日常任务奖励")
         await this.post("/mission/autoConfirmMissions", {type: "WEEKLY"})
+        log("[任务]已领取周常任务奖励")
     }
 
     async auto_recruit() {
@@ -289,7 +300,7 @@ class Player {
             platform: 1
         }
         await sleep(battleStats.completeTime * 1000)
-        const res = await this.post("/quest/battleFinish", {
+        await this.post("/quest/battleFinish", {
             data: encryptBattleData(battleData, this.data.pushFlags.status),
             battleData: {
                 stats: {},
@@ -314,39 +325,39 @@ class Player {
         })
         log("[building] deliveryBatchOrder")
         if(moment().diff(moment([2024,9,7]),"days")%2==0){
-            await this.post('/building/assignChar', {"roomSlotId": "slot_34", "charInstIdList": [244, 224, 257, 134, 132]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_26", "charInstIdList": [27]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_25", "charInstIdList": [46, 53, 205]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_24", "charInstIdList": [24, 201, 204]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_28", "charInstIdList": [193, 249, 165, 9, 253]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_36", "charInstIdList": [213, 160]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_16", "charInstIdList": [263]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_15", "charInstIdList": [141, 11, 22]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_14", "charInstIdList": [28, 29, 50]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_20", "charInstIdList": [60, 179, 94, 217, 97]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_23", "charInstIdList": [79]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_7", "charInstIdList": [98]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_6", "charInstIdList": [5, 2, 34]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_5", "charInstIdList": [15, 33, 92]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_9", "charInstIdList": [240, 10, 28, 12, 19]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_3", "charInstIdList": [42, 206, 178, 29, 50]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_34", charInstIdList: [244, 224, 257, 134, 132]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_26", charInstIdList: [27]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_25", charInstIdList: [46, 53, 205]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_24", charInstIdList: [24, 201, 204]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_28", charInstIdList: [193, 249, 165, 9, 253]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_36", charInstIdList: [213, 160]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_16", charInstIdList: [263]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_15", charInstIdList: [141, 11, 22]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_14", charInstIdList: [28, 29, 50]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_20", charInstIdList: [60, 179, 94, 217, 97]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_23", charInstIdList: [79]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_7", charInstIdList: [98]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_6", charInstIdList: [5, 2, 34]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_5", charInstIdList: [15, 33, 92]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_9", charInstIdList: [240, 10, 28, 12, 19]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_3", charInstIdList: [42, 206, 178, 29, 50]})
         }else{
-            await this.post('/building/assignChar', {"roomSlotId": "slot_34", "charInstIdList": [128, 190, 170, 278, 280]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_26", "charInstIdList": [193]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_25", "charInstIdList": [249, 165, 9]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_24", "charInstIdList": [124, 135, 93]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_28", "charInstIdList": [192, 92, 151, 213, 27]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_36", "charInstIdList": [253, 60]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_16", "charInstIdList": [179]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_15", "charInstIdList": [94, 217, 97]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_14", "charInstIdList": [28, 29, 50]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_20", "charInstIdList": [263, 98, 79, 160, 34]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_23", "charInstIdList": [240]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_7", "charInstIdList": [10]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_6", "charInstIdList": [2, 12, 19]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_5", "charInstIdList": [42, 206, 178]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_9", "charInstIdList": [5, 205, 15, 33, 204]})
-            await this.post('/building/assignChar', {"roomSlotId": "slot_3", "charInstIdList": [24, 201, 141, 11, 46]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_34", charInstIdList: [128, 190, 170, 278, 280]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_26", charInstIdList: [193]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_25", charInstIdList: [249, 165, 9]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_24", charInstIdList: [124, 135, 93]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_28", charInstIdList: [192, 92, 151, 213, 27]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_36", charInstIdList: [253, 60]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_16", charInstIdList: [179]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_15", charInstIdList: [94, 217, 97]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_14", charInstIdList: [28, 29, 50]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_20", charInstIdList: [263, 98, 79, 160, 34]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_23", charInstIdList: [240]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_7", charInstIdList: [10]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_6", charInstIdList: [2, 12, 19]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_5", charInstIdList: [42, 206, 178]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_9", charInstIdList: [5, 205, 15, 33, 204]})
+            await this.post('/building/assignChar', {roomSlotId: "slot_3", charInstIdList: [24, 201, 141, 11, 46]})
         }
         log("[building] assign chars")
     }
@@ -389,13 +400,13 @@ class Player {
         if (this.data.campaignsV2.sweepMaxKills[stageId] != 400) {
             return
         }
-        if (this.data.campaignsV2.campaignCurrentFee >= this.data.campaignsV2.campaignCurrentFee) {
+        if (this.data.campaignsV2.campaignCurrentFee >= this.data.campaignsV2.campaignTotalFee) {
             return
         }
         if (!Object.values(this.data.consumable["EXTERMINATION_AGENT"]).some((v) => v.count > 0)) {
             return
         }
-        const [instId] = Object.entries(this.data.consumable["EXTERMINATION_AGENT"]).find(([k, v]) => v.count > 0)!
+        const [instId] = Object.entries(this.data.consumable["EXTERMINATION_AGENT"]).find(([_, v]) => v.count > 0)!
         await this.post<any, any>("/campaignV2/battleSweep", {
             stageId,
             itemId: "EXTERMINATION_AGENT",
@@ -408,12 +419,14 @@ class Player {
         await this.post<AccountSyncDataRequest, AccountSyncDataResponse>("/account/syncData", {
             platform: 1
         })
-        log("data synced,uid:", this.uid)
+        this.data.status.ap+=floor((now()-this.data.status.lastApAddTime)/360)
+        log("[main] data synced,uid:", this.uid)
         this.printStatus()
     }
 
     merge(delta: PlayerDataDelta) {
         mergeDict(this.data, delta.modified, "modify")
+        mergeDict(this.data, delta.deleted, "delete")
     }
 
     async post<K = any, T = any>(cgi: string, data: K): Promise<T> {
@@ -441,8 +454,20 @@ class Player {
                 this.merge(response.data.playerDataDelta)
             }
             return response.data;
-        }catch (e) {
-            log(e)
+        }catch (err ) {
+            let error = err as AxiosError;
+            if (error.response) {
+                // 请求成功但状态码不在 2xx 范围
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // 请求发出但没有收到响应
+                console.log(error.request);
+            } else {
+                // 在设置请求时发生了错误
+                console.log('Error', error.message);
+            }
         }
         return {} as T
 
@@ -488,6 +513,7 @@ async function bootstrap() {
     }
     const p = new Player()
     await p.init(phone, pwd)
+
     await p.auto_checkin()
     await p.auto_mail()
     await p.auto_gacha()
@@ -503,5 +529,7 @@ async function bootstrap() {
     await p.auto_confirm_missions()
 }
 
-bootstrap();
+bootstrap().then(_ => {
+    log("[main] 已完成")
+});
 

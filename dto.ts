@@ -157,6 +157,7 @@ export namespace PlayerActivity {
     export interface PlayerCheckinOnlyTypeActivity {
         lastTs: number;
         history: number[];
+        dynOpt?:string[]
     }
     export interface PlayerGridGachaV2Activity {
         today: {
