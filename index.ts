@@ -28,7 +28,6 @@ import {
     ResVersionResponse
 } from "./models";
 import {floor} from "lodash";
-import { writeFileSync } from 'fs';
 
 
 const phone = process.argv[2];
@@ -337,9 +336,9 @@ class Player {
             }
             log("[building] assign chars")
         }
-        this.exportBuilding()
 
     }
+    /*
     exportBuilding(){
         let m=Object.entries(this.data.dexNav.character).reduce((acc,[k,v])=>{
             return {
@@ -357,7 +356,7 @@ class Player {
 
         writeFileSync("2.json",JSON.stringify(c,null," "))
         log("exported building config to 2.json")
-    }
+    }*/
     async auto_gacha() {
         for (const [poolId, v] of Object.entries(this.data.gacha.limit)) {
             if (v.leastFree) {
