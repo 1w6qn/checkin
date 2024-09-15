@@ -1,6 +1,9 @@
 {
   "5d78668f18221717469556fe8a5ed85e": {
     "enableRecruit": true,
+    "enableBattle": true,
+    "assignChars": true,
+    "enableBetterLog": false,
     "battleLog": {
       "main_01-07": {
         "stats": {
@@ -1146,9 +1149,188 @@
         },
         "isCheat": "",
         "completeTime": 107
+      }
+    },
+    "building": {
+      "Math.floor(new Date()-1725638400000)%2==1;": {
+        "slot_3": [
+          "char_103_angel",
+          "char_4032_provs",
+          "char_128_plosis",
+          "char_210_stward",
+          "char_284_spot"
+        ],
+        "slot_9": [
+          "char_185_frncat",
+          "char_4066_highmo",
+          "char_181_flower",
+          "char_235_jesica",
+          "char_332_archet"
+        ],
+        "slot_5": [
+          "char_124_kroos",
+          "char_4062_totter",
+          "char_2013_cerber"
+        ],
+        "slot_6": [
+          "char_502_nblade",
+          "char_109_fmout",
+          "char_208_melan"
+        ],
+        "slot_7": [
+          "char_277_sqrrel"
+        ],
+        "slot_13": [
+          "char_1026_gvial2",
+          "char_245_cello"
+        ],
+        "slot_23": [
+          "char_1031_slent2"
+        ],
+        "slot_20": [
+          "char_1027_greyy2",
+          "char_107_liskam",
+          "char_180_amgoat",
+          "char_010_chen",
+          "char_123_fang"
+        ],
+        "slot_14": [
+          "char_196_sunbr",
+          "char_282_catap",
+          "char_283_midn"
+        ],
+        "slot_15": [
+          "char_400_weedy",
+          "char_472_pasngr",
+          "char_416_zumama"
+        ],
+        "slot_16": [
+          "char_134_ifrit"
+        ],
+        "slot_36": [
+          "char_4087_ines",
+          "char_337_utage"
+        ],
+        "slot_32": [
+          ""
+        ],
+        "slot_28": [
+          "char_188_helage",
+          "char_378_asbest",
+          "char_421_crow",
+          "char_427_vigil",
+          "char_253_greyy"
+        ],
+        "slot_24": [
+          "char_102_texas",
+          "char_140_whitew",
+          "char_272_strong"
+        ],
+        "slot_25": [
+          "char_4106_bryota",
+          "char_437_mizuki",
+          "char_281_popka"
+        ],
+        "slot_26": [
+          "char_377_gdglow"
+        ],
+        "slot_34": [
+          "char_1011_lava2",
+          "char_1024_hbisc2",
+          "char_1021_kroos2",
+          "char_1035_wisdel",
+          "char_4134_cetsyr"
+        ]
       },
-      "building": {
-
+      "Math.floor(new Date()-1725638400000)%2==0;": {
+        "slot_3": [
+          "char_124_kroos",
+          "char_4062_totter",
+          "char_2013_cerber",
+          "char_282_catap",
+          "char_283_midn"
+        ],
+        "slot_9": [
+          "char_1031_slent2",
+          "char_277_sqrrel",
+          "char_196_sunbr",
+          "char_109_fmout",
+          "char_208_melan"
+        ],
+        "slot_5": [
+          "char_181_flower",
+          "char_235_jesica",
+          "char_378_asbest"
+        ],
+        "slot_6": [
+          "char_185_frncat",
+          "char_502_nblade",
+          "char_123_fang"
+        ],
+        "slot_7": [
+          "char_107_liskam"
+        ],
+        "slot_13": [
+          "char_1026_gvial2",
+          "char_245_cello"
+        ],
+        "slot_23": [
+          "char_180_amgoat"
+        ],
+        "slot_20": [
+          "char_337_utage",
+          "char_134_ifrit",
+          "char_400_weedy",
+          "char_472_pasngr",
+          "char_416_zumama"
+        ],
+        "slot_14": [
+          "",
+          "",
+          ""
+        ],
+        "slot_15": [
+          "char_128_plosis",
+          "char_210_stward",
+          "char_240_wyvern"
+        ],
+        "slot_16": [
+          "char_1027_greyy2"
+        ],
+        "slot_36": [
+          "char_427_vigil",
+          "char_010_chen"
+        ],
+        "slot_32": [
+          ""
+        ],
+        "slot_28": [
+          "char_377_gdglow",
+          "char_4106_bryota",
+          "char_437_mizuki",
+          "char_281_popka",
+          "char_4087_ines"
+        ],
+        "slot_24": [
+          "char_103_angel",
+          "char_4032_provs",
+          "char_332_archet"
+        ],
+        "slot_25": [
+          "char_284_spot",
+          "char_141_nights",
+          "char_4066_highmo"
+        ],
+        "slot_26": [
+          "char_253_greyy"
+        ],
+        "slot_34": [
+          "char_4071_peper",
+          "char_003_kalts",
+          "char_4098_vvana",
+          "char_456_ash",
+          "char_459_tachak"
+        ]
       }
     }
   }

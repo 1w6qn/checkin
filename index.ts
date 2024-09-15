@@ -27,8 +27,8 @@ import {
     PlayerDeltaResponse, QuestBattleStartResponse,
     ResVersionResponse
 } from "./models";
-import moment from "moment";
 import {floor} from "lodash";
+import { writeFileSync } from 'fs';
 
 
 const phone = process.argv[2];
@@ -40,11 +40,19 @@ class Player {
     secret: string;
     server: string;
     config: {
+        enableRecruit:boolean
+        enableBattle:boolean
+        assignChars:boolean
         battleLog: {
             [key: string]: {
                 stats: any
                 isCheat: string
                 completeTime: number
+            }
+        },
+        building:{
+            [key:string]:{
+                [key:string]:string[]
             }
         }
     }
@@ -314,44 +322,41 @@ class Player {
             slotList: Object.keys(this.data.building.rooms.TRADING)
         })
         log("[building] deliveryBatchOrder")
-        if(moment().diff(moment([2024,9,7]),"days")%2==0){
-            await this.post('/building/assignChar', {roomSlotId: "slot_34", charInstIdList: [244, 224, 257, 134, 132]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_26", charInstIdList: [27]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_25", charInstIdList: [46, 53, 205]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_24", charInstIdList: [24, 201, 204]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_28", charInstIdList: [193, 249, 165, 9, 253]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_36", charInstIdList: [213, 160]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_16", charInstIdList: [263]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_15", charInstIdList: [141, 11, 22]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_14", charInstIdList: [28, 29, 50]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_20", charInstIdList: [60, 179, 94, 217, 97]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_23", charInstIdList: [79]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_7", charInstIdList: [98]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_6", charInstIdList: [5, 2, 34]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_5", charInstIdList: [15, 33, 92]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_9", charInstIdList: [240, 10, 28, 12, 19]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_3", charInstIdList: [42, 206, 178, 29, 50]})
-        }else{
-            await this.post('/building/assignChar', {roomSlotId: "slot_34", charInstIdList: [128, 190, 170, 278, 280]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_26", charInstIdList: [193]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_25", charInstIdList: [249, 165, 9]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_24", charInstIdList: [124, 135, 93]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_28", charInstIdList: [192, 92, 151, 213, 27]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_36", charInstIdList: [253, 60]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_16", charInstIdList: [179]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_15", charInstIdList: [94, 217, 97]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_14", charInstIdList: [28, 29, 50]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_20", charInstIdList: [263, 98, 79, 160, 34]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_23", charInstIdList: [240]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_7", charInstIdList: [10]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_6", charInstIdList: [2, 12, 19]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_5", charInstIdList: [42, 206, 178]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_9", charInstIdList: [5, 205, 15, 33, 204]})
-            await this.post('/building/assignChar', {roomSlotId: "slot_3", charInstIdList: [24, 201, 141, 11, 46]})
+        if(this.config.assignChars){
+            let [_,config]=Object.entries(this.config.building).find(
+                ([condition,_])=> eval(condition)
+            )!
+            for(let [roomSlotId,charIds] of Object.entries(config)){
+                await this.post('/building/assignChar', {
+                    roomSlotId,
+                    charInstIdList: charIds.map(id =>
+                        this.data.dexNav.character[id]?.charInstId || -1
+                    )
+                })
+            }
+            log("[building] assign chars")
         }
-        log("[building] assign chars")
-    }
+        this.exportBuilding()
 
+    }
+    exportBuilding(){
+        let m=Object.entries(this.data.dexNav.character).reduce((acc,[k,v])=>{
+            return {
+                [v.charInstId]:k,
+                ...acc
+            }
+        },{} as {[key:number]:string})
+        let c=Object.entries(this.data.building.roomSlots)
+            .reduce((acc,[slotId,slot])=>{
+            return {
+                [slotId]:slot.charInstIds.map((v)=> m[v]||""),
+                ...acc
+            }
+        },{} as {[key:string]:string[]})
+
+        writeFileSync("2.json",JSON.stringify(c,null," "))
+        log("exported building config to 2.json")
+    }
     async auto_gacha() {
         for (const [poolId, v] of Object.entries(this.data.gacha.limit)) {
             if (v.leastFree) {
@@ -386,6 +391,9 @@ class Player {
     }
 
     async auto_campaign() {
+        if(this.data.status.ap<25){
+            return
+        }
         const stageId = this.data.campaignsV2.open.rotate
         if (this.data.campaignsV2.sweepMaxKills[stageId] != 400) {
             return
@@ -410,6 +418,9 @@ class Player {
             platform: 1
         })
         this.data.status.ap+=floor((now()-this.data.status.lastApAddTime)/360)
+        if(this.data.status.ap>this.data.status.maxAp){
+            this.data.status.ap=this.data.status.maxAp
+        }
         log("[main] data synced,uid:", this.uid)
         this.printStatus()
     }
@@ -444,18 +455,13 @@ class Player {
                 this.merge(response.data.playerDataDelta)
             }
             return response.data;
-        }catch (err ) {
+        }catch (err) {
             let error = err as AxiosError;
             if (error.response) {
-                // 请求成功但状态码不在 2xx 范围
                 console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
             } else if (error.request) {
-                // 请求发出但没有收到响应
                 console.log(error.request);
             } else {
-                // 在设置请求时发生了错误
                 console.log('Error', error.message);
             }
         }
@@ -510,11 +516,15 @@ async function bootstrap() {
     await p.auto_building()
     await p.auto_social()
     await p.auto_buy()
-    await p.auto_recruit()
+    if(p.config.enableRecruit){
+        await p.auto_recruit()
+    }
     await p.auto_campaign()
-    while (p.data.status.ap>=21){
-        log("[main] ap remain:",p.data.status.ap)
-        await p.auto_replay("act36side_07",21)
+    if(p.config.enableBattle){
+        while (p.data.status.ap>=21){
+            log("[main] ap remain:",p.data.status.ap)
+            await p.auto_replay("act36side_07",21)
+        }
     }
     await p.auto_confirm_missions()
 }
