@@ -109,7 +109,7 @@ export interface PlayerActivity {
     MISSION_ONLY: {};
     MINISTORY: {};
     ROGUELIKE: {};
-    PRAY_ONLY: {};
+    PRAY_ONLY: {[key: string]:PlayerActivity.PlayerPrayOnlyActivity};
     MULTIPLAY: {};
     TYPE_ACT17D7: {};
     GRID_GACHA: {};
@@ -158,6 +158,17 @@ export namespace PlayerActivity {
         lastTs: number;
         history: number[];
         dynOpt?:string[]
+    }
+    export interface PlayerPrayOnlyActivity {
+        lastTs: number;
+        extraCount: number;
+        prayDaily: number;
+        prayMaxIndex: number;
+        praying: boolean;
+        prayArray:{
+            index:number,
+            count:number
+        }[]
     }
     export interface PlayerGridGachaV2Activity {
         today: {
@@ -2033,7 +2044,7 @@ export interface Archive {
 }
 
 export interface Save {
-    slot: number;
+    slot?: number;
     day: number;
     maxAp: number;
     season: SaveSeason;

@@ -145,14 +145,146 @@ class Player {
                 log("[activity][GRID_GACHA_V2] doTodayGacha",activityId)
             }
         }
+        for (const [activityId, v] of Object.entries(this.data.activity.PRAY_ONLY)) {
+            log("发现PRAY_ONLY活动",activityId)
+            if (!v.praying) {
+                let prayArray=[1,2]
+                if(v.extraCount==1)prayArray=[1,2,3]
+                await this.post('/activity/prayOnly/getReward', {prayArray,activityId})
+                log("[activity][PRAY_ONLY] getReward",activityId)
+            }
+        }
     }
-
+    async auto_ra(){
+        for(let i=0;i<50;i++){
+            log(i+1,"/",50)
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                topicId: "sandbox_1",
+                nodeId: "nCF3F",
+                eventId: "mission_iron_m2",
+                choiceId: "choice_iron_m2_2",
+                charList: [29, 7, 16, 17, 20, 30]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                topicId: "sandbox_1",
+                nodeId: "nCF3F",
+                eventId: "mission_iron_m2",
+                choiceId: "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n0446",
+                "eventId": "mission_wood_m2",
+                "choiceId": "choice_wood_m2_2",
+                "charList": [52, 53, 56, 76, 89, 105]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n0446",
+                "eventId": "mission_wood_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n42D8",
+                "eventId": "mission_wood_stone_m2",
+                "choiceId": "choice_wood_stone_m2_2",
+                "charList": [110, 111, 118, 125, 136, 147]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n42D8",
+                "eventId": "mission_wood_stone_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n9B77",
+                "eventId": "mission_stone_m2",
+                "choiceId": "choice_stone_m2_2",
+                "charList": [148, 169, 172, 202, 211, 238]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n9B77",
+                "eventId": "mission_stone_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/settleDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                topicId: "sandbox_1",
+                nodeId: "nCF3F",
+                eventId: "mission_iron_m2",
+                choiceId: "choice_iron_m2_2",
+                charList: [277, 287, 44, 62, 68, 80]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                topicId: "sandbox_1",
+                nodeId: "nCF3F",
+                eventId: "mission_iron_m2",
+                choiceId: "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n0446",
+                "eventId": "mission_wood_m2",
+                "choiceId": "choice_wood_m2_2",
+                "charList": [83, 84, 86, 87, 92, 95]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n0446",
+                "eventId": "mission_wood_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n42D8",
+                "eventId": "mission_wood_stone_m2",
+                "choiceId": "choice_wood_stone_m2_2",
+                "charList": [96, 98, 100, 102, 106, 108]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n42D8",
+                "eventId": "mission_wood_stone_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/startMission", {
+                "topicId": "sandbox_1",
+                "nodeId": "n9B77",
+                "eventId": "mission_stone_m2",
+                "choiceId": "choice_stone_m2_2",
+                "charList": [114, 115, 117, 120, 123, 126]
+            })
+            await this.post("/sandboxPerm/sandboxV2/eventChoice", {
+                "topicId": "sandbox_1",
+                "nodeId": "n9B77",
+                "eventId": "mission_stone_m2",
+                "choiceId": "choice_missionleave_1"
+            })
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/discardAp", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/nextDay", {"topicId": "sandbox_1"})
+            await this.post("/sandboxPerm/sandboxV2/settleDay", {"topicId": "sandbox_1"})
+        }
+        log("[ra] complete")
+    }
     async auto_mail() {
         const mailMetaInfoList = (await this.post<{ from: number }, MailGetMetaInfoListResponse>('/mail/getMetaInfoList', {
             from: now()
         })).result.filter((mail)=>(mail.state || !mail.hasItem))
-        const mailIdList: number[] = mailMetaInfoList.filter((mail)=>mail.type).map((mail)=>mail.mailId)
-        const sysMailIdList: number[] = mailMetaInfoList.filter((mail)=>!mail.type).map((mail)=>mail.mailId)
+        const mailIdList: number[] = mailMetaInfoList.filter((mail)=>!mail.type).map((mail)=>mail.mailId)
+        const sysMailIdList: number[] = mailMetaInfoList.filter((mail)=>mail.type).map((mail)=>mail.mailId)
         if (mailIdList || sysMailIdList) {
             log("发现未领取邮件")
             await this.post('/mail/receiveAllMail', {
@@ -427,7 +559,7 @@ class Player {
 
     merge(delta: PlayerDataDelta) {
         mergeDict(this.data, delta.modified, "modify")
-        mergeDict(this.data, delta.deleted, "delete")
+        //mergeDict(this.data, delta.deleted, "delete")
     }
 
     async post<K = any, T = any>(cgi: string, data: K): Promise<T> {
@@ -507,9 +639,10 @@ async function bootstrap() {
         log("error: no phone or pwd")
         return
     }
+
     const p = new Player()
     await p.init(phone, pwd)
-
+    //await p.auto_ra()
     await p.auto_checkin()
     await p.auto_mail()
     await p.auto_gacha()
@@ -527,6 +660,10 @@ async function bootstrap() {
         }
     }
     await p.auto_confirm_missions()
+
+    /*
+
+     */
 }
 
 bootstrap().then(_ => {
