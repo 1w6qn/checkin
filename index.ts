@@ -14,7 +14,7 @@ import {
     encryptBattleData,
     get_md5,
     getBattleDataAccess,
-    sleep, decryptBattleData
+    sleep
 } from "./utils";
 import {
     AccountLoginRequest,
