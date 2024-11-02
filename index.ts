@@ -14,7 +14,7 @@ import {
     encryptBattleData,
     get_md5,
     getBattleDataAccess,
-    sleep
+    sleep, decryptBattleData
 } from "./utils";
 import {
     AccountLoginRequest,
@@ -639,7 +639,6 @@ async function bootstrap() {
         log("error: no phone or pwd")
         return
     }
-
     const p = new Player()
     await p.init(phone, pwd)
     //await p.auto_ra()
@@ -660,6 +659,7 @@ async function bootstrap() {
         }
     }
     await p.auto_confirm_missions()
+
 
     /*
 
