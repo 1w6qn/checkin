@@ -4084,5 +4084,14 @@
         ]
       }
     }
+  },
+  "ac0afb6544fc378009a4732c3907c05a": {
+    "enableRecruit": true,
+    "enableBattle": false,
+    "assignChars": false,
+    "enableBetterLog": false,
+    "battleStage": "",
+    "battleLog": [],
+    "building": {}
   }
 }

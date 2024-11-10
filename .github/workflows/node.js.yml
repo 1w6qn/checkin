@@ -26,3 +26,4 @@ jobs:
         cache: 'yarn'
     - run: yarn --frozen-lockfile
     - run: yarn run start ${{ secrets.PHONE }} ${{ secrets.PWD }}
+    - run: yarn run start ${{ secrets.PHONE1 }} ${{ secrets.PWD1 }}
