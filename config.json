@@ -2,9 +2,21 @@
   "5d78668f18221717469556fe8a5ed85e": {
     "enableRecruit": true,
     "enableBattle": true,
+    "enableBatchBuilding": false,
     "assignChars": true,
     "enableBetterLog": false,
-    "battleStage": "act39side_08",
+    "battleStage": "tough_14-11",
+    "battleSchedule": {
+      "act39side_08": {
+        "type": "timeRange",
+        "startTime": "2021-09-22T15:00:00Z",
+        "endTime": "2021-09-22T18:00:00Z"
+      },
+      "tough_14-11": {
+        "type": "default"
+      }
+
+    },
     "battleLog": {
       "main_01-07": {
         "stats": {
@@ -5023,6 +5035,17 @@
   "ac0afb6544fc378009a4732c3907c05a": {
     "enableRecruit": true,
     "enableBattle": false,
+    "enableBatchBuilding": false,
+    "assignChars": false,
+    "enableBetterLog": false,
+    "battleStage": "",
+    "battleLog": [],
+    "building": {}
+  },
+  "6050eb186e0709eeef35748a664aa57b": {
+    "enableRecruit": true,
+    "enableBattle": false,
+    "enableBatchBuilding": true,
     "assignChars": false,
     "enableBetterLog": false,
     "battleStage": "",

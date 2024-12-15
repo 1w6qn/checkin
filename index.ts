@@ -42,6 +42,7 @@ class Player {
         enableRecruit:boolean
         enableBattle:boolean
         assignChars:boolean
+        enableBatchBuilding:boolean
         battleStage:string
         battleLog: {
             [key: string]: {
@@ -467,6 +468,11 @@ class Player {
                 })
             }
             log("[building] assign chars")
+        }
+        if(this.config.enableBatchBuilding){
+            await this.post("/building/batchChangeWorkChar", {})
+            await this.post("/building/batchRestChar", {})
+            log("[building] 自动换班完成")
         }
 
     }
