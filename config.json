@@ -5,7 +5,7 @@
     "enableBatchBuilding": true,
     "assignChars": false,
     "enableBetterLog": false,
-    "battleStage": "tough_14-11",
+    "battleStage": "act40side_08",
     "battleSchedule": {
       "act39side_08": {
         "type": "timeRange",
@@ -4847,6 +4847,1690 @@
         },
         "isCheat": "",
         "completeTime": 90
+      },
+      "tough_13-16": {},
+      "act40side_08":{
+        "stats": {
+          "killedEnemiesCnt": 24,
+          "unnatrualRecoveredCost": 0,
+          "charStats": [
+            {
+              "Key": {
+                "charId": "char_1035_wisdel",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1016_agoat2",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "counterType": "WITHDRAW"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "token_10035_wisdel_wward",
+                "counterType": "DEAD"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_4133_logos",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_4087_ines",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            }
+          ],
+          "enemyStats": [
+            {
+              "Key": {
+                "enemyId": "enemy_10050_cjmeat",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10050_cjmeat",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10059_cjgfod",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 16
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10059_cjgfod",
+                "counterType": "REACH_EXIT",
+                "isInvalidKilled": 0
+              },
+              "Value": 14
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10053_cjman",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 8
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10051_cjmag",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10060_cjbfod",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 13
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10058_cjfrog",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10053_cjman",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 8
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10060_cjbfod",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 10
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10060_cjbfod",
+                "counterType": "REACH_EXIT",
+                "isInvalidKilled": 0
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10058_cjfrog",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10051_cjmag",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10061_cjglon",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10061_cjglon",
+                "counterType": "REACH_EXIT",
+                "isInvalidKilled": 0
+              },
+              "Value": 1
+            }
+          ],
+          "skillTrigStats": [
+            {
+              "Key": {
+                "charId": "token_10035_wisdel_wward",
+                "skillId": "sktok_wisdel_wward"
+              },
+              "Value": 76
+            },
+            {
+              "Key": {
+                "charId": "char_1035_wisdel",
+                "skillId": "skchr_wisdel_3"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "skillId": "skchr_texas2_3"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_1016_agoat2",
+                "skillId": "skchr_agoat2_1"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "trap_211_cjgtow",
+                "skillId": "sktok_cjgtow_1"
+              },
+              "Value": 1
+            }
+          ],
+          "charAdvancedStats": {},
+          "enemyAdvancedStats": {},
+          "runeAdvancedStats": [],
+          "rlBuffAdvancedStats": [],
+          "extraBattleInfoStats": {},
+          "extraBattleInfoSubStats": [],
+          "charList": {
+            "210": [
+              -824.274,
+              0,
+              [
+                [
+                  1737729344,
+                  1884.68,
+                  999.12,
+                  320,
+                  0,
+                  10,
+                  1,
+                  100,
+                  0.93,
+                  18,
+                  [
+                    {
+                      "values": [
+                        8,
+                        0.25
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.28,
+                        1
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1.3,
+                      0.2,
+                      4,
+                      1,
+                      1.65,
+                      2,
+                      8
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.1
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                2,
+                10,
+                0,
+                100,
+                "uniequip_002_texas2",
+                3
+              ],
+              [
+                -2997.096,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "248": [
+              0,
+              517,
+              [
+                [
+                  1737729333,
+                  1853.94,
+                  517,
+                  109,
+                  10,
+                  15,
+                  1,
+                  100,
+                  2.85,
+                  66,
+                  [
+                    {
+                      "values": [
+                        0.1,
+                        6,
+                        3
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.06,
+                        0.12
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      0.4,
+                      0.08
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.6
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                0,
+                10,
+                3,
+                100,
+                "uniequip_002_agoat2",
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "253": [
+              -705,
+              0,
+              [
+                [
+                  1737729365,
+                  2162.4,
+                  615,
+                  302,
+                  0,
+                  11,
+                  1,
+                  100,
+                  1,
+                  35,
+                  [
+                    {
+                      "values": [
+                        90,
+                        18000,
+                        5
+                      ]
+                    },
+                    {
+                      "values": [
+                        -0.3
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1,
+                      1.1,
+                      7,
+                      70,
+                      12
+                    ]
+                  },
+                  {
+                    "values": [
+                      -9999
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                70,
+                1,
+                10,
+                0,
+                100,
+                "",
+                0
+              ],
+              [
+                -4050,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "278": [
+              -6483.4,
+              0,
+              [
+                [
+                  1737729283,
+                  1888,
+                  842,
+                  256,
+                  15,
+                  24,
+                  1,
+                  107,
+                  2.1,
+                  70,
+                  [
+                    {
+                      "values": []
+                    },
+                    {
+                      "values": [
+                        1.25,
+                        0.15,
+                        1.75,
+                        1,
+                        1.1
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1.8,
+                      2,
+                      2.9,
+                      2.2,
+                      1,
+                      6,
+                      3
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.5,
+                      1
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                2,
+                10,
+                1,
+                100,
+                "uniequip_002_wisdel",
+                3
+              ],
+              [
+                -464588.844,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "279": [
+              -1112.58,
+              723.8,
+              [
+                [
+                  1737729362,
+                  1812.6,
+                  962.58,
+                  115,
+                  20,
+                  21,
+                  1,
+                  100,
+                  1.6,
+                  70,
+                  [
+                    {
+                      "values": [
+                        0.4,
+                        0.6,
+                        0.8
+                      ]
+                    },
+                    {
+                      "values": [
+                        5,
+                        -10,
+                        150
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.08
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.6,
+                        0.6,
+                        0.8,
+                        0.6
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      3,
+                      4,
+                      0.05,
+                      30
+                    ]
+                  },
+                  null
+                ]
+              ],
+              [
+                2,
+                60,
+                2,
+                10,
+                0,
+                100,
+                "uniequip_002_logos",
+                3
+              ],
+              [
+                -14035.9922,
+                0,
+                0,
+                0,
+                -1033.873
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "enemyList": {
+            "enemy_10059_cjgfod": [
+              [
+                5,
+                100,
+                0,
+                0,
+                100,
+                1.7,
+                0.7
+              ]
+            ],
+            "enemy_10060_cjbfod": [
+              [
+                15,
+                100,
+                0,
+                0,
+                100,
+                1.7,
+                0.7
+              ]
+            ],
+            "enemy_10061_cjglon": [
+              [
+                100,
+                8000,
+                0,
+                0,
+                100,
+                1.6,
+                3
+              ]
+            ],
+            "enemy_10062_cjblon": [
+              [
+                100,
+                1500,
+                0,
+                0,
+                100,
+                1.6,
+                3
+              ]
+            ],
+            "enemy_10050_cjmeat": [
+              [
+                3500,
+                260,
+                50,
+                0,
+                100,
+                1.7,
+                0.9
+              ]
+            ],
+            "enemy_10053_cjman": [
+              [
+                4300,
+                330,
+                150,
+                0,
+                100,
+                2,
+                0.9
+              ]
+            ],
+            "enemy_10058_cjfrog": [
+              [
+                15000,
+                1200,
+                700,
+                20,
+                100,
+                3,
+                0.7
+              ]
+            ],
+            "enemy_10051_cjmag": [
+              [
+                12000,
+                450,
+                300,
+                50,
+                100,
+                4,
+                0.7
+              ]
+            ]
+          },
+          "runeList": [],
+          "rlBuffList": [],
+          "beginTs": 1737729255,
+          "endTs": 1737729369,
+          "access": "8AA01706E1993F5C2305992F6F62ACCDFC5FB85E",
+          "hash": "62AE221E4C5D4CAD4B851D7380F4ED2C",
+          "packageName": "com.hypergryph.arknights",
+          "checkKilledCnt": 1,
+          "leftHp": 3,
+          "totalHeal": 2385,
+          "totalDamage": 187567.969,
+          "fixedPlayTime": 200499,
+          "restartCompleteTimeList": [],
+          "extraInfo": {},
+          "extraBattleInfo": {
+            "SPAWN,token_10035_wisdel_wward": 4,
+            "KILL_COUNT,token_10035_wisdel_wward": 3,
+            "KILL_COUNT,char_1035_wisdel": 29,
+            "SIMPLE,enemy_10058_cjfrog,prey": 2,
+            "KILL_COUNT,char_1028_texas2": 1,
+            "SIMPLE,trap_211_cjgtow,summon_dragon": 1,
+            "KILL_COUNT,char_4133_logos": 1,
+            "DEATHDETAIL,char_1028_texas2,BOSS,ELITE": 1,
+            "OUTPUT_DAMAGE_TOTAL,char_1035_wisdel": -464589,
+            "OUTPUT_DAMAGE_TOTAL,token_10035_wisdel_wward": -51327
+          },
+          "clientAntiCheatLog": {},
+          "idList": [
+            "token_10035_wisdel_wward"
+          ],
+          "packedRuneDataList": null,
+          "autoReplayCancelled": 0
+        },
+        "isCheat": "",
+        "completeTime": 100
+      },
+      "act40side_07":{
+        "stats": {
+          "killedEnemiesCnt": 42,
+          "unnatrualRecoveredCost": 30,
+          "charStats": [
+            {
+              "Key": {
+                "charId": "char_4087_ines",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1035_wisdel",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_4133_logos",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_264_f12yin",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1016_agoat2",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1029_yato2",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "counterType": "SPAWN"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_1029_yato2",
+                "counterType": "WITHDRAW"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "counterType": "WITHDRAW"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_222_bpipe",
+                "counterType": "SPAWN"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_222_bpipe",
+                "counterType": "WITHDRAW"
+              },
+              "Value": 1
+            }
+          ],
+          "enemyStats": [
+            {
+              "Key": {
+                "enemyId": "enemy_10050_cjmeat",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 20
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10053_cjman",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 7
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10050_cjmeat",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 20
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10059_cjgfod",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 24
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10053_cjman",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 7
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10059_cjgfod",
+                "counterType": "REACH_EXIT",
+                "isInvalidKilled": 0
+              },
+              "Value": 20
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10057_cjstel",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 5
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10056_cjfish",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10056_cjfish",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 6
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10057_cjstel",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 5
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10052_cjshld",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10059_cjgfod",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10060_cjbfod",
+                "counterType": "ENCOUNTER",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10060_cjbfod",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "enemyId": "enemy_10052_cjshld",
+                "counterType": "HP_ZERO",
+                "isInvalidKilled": 0
+              },
+              "Value": 4
+            }
+          ],
+          "skillTrigStats": [
+            {
+              "Key": {
+                "charId": "char_4087_ines",
+                "skillId": "skchr_ines_2"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "token_10035_wisdel_wward",
+                "skillId": "sktok_wisdel_wward"
+              },
+              "Value": 42
+            },
+            {
+              "Key": {
+                "charId": "char_4133_logos",
+                "skillId": "skchr_logos_3"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1029_yato2",
+                "skillId": "skchr_yato2_2"
+              },
+              "Value": 1
+            },
+            {
+              "Key": {
+                "charId": "char_1028_texas2",
+                "skillId": "skchr_texas2_3"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_222_bpipe",
+                "skillId": "skchr_bpipe_2"
+              },
+              "Value": 4
+            },
+            {
+              "Key": {
+                "charId": "char_1035_wisdel",
+                "skillId": "skchr_wisdel_3"
+              },
+              "Value": 2
+            },
+            {
+              "Key": {
+                "charId": "char_1016_agoat2",
+                "skillId": "skchr_agoat2_1"
+              },
+              "Value": 1
+            }
+          ],
+          "charAdvancedStats": {},
+          "enemyAdvancedStats": {},
+          "runeAdvancedStats": [],
+          "rlBuffAdvancedStats": [],
+          "extraBattleInfoStats": {},
+          "extraBattleInfoSubStats": [],
+          "charList": {
+            "131": [
+              -1884.3999,
+              0,
+              [
+                [
+                  1737729455,
+                  2664,
+                  744,
+                  382,
+                  0,
+                  12,
+                  1,
+                  100,
+                  1,
+                  70,
+                  [
+                    {
+                      "values": [
+                        1.3,
+                        0.28
+                      ]
+                    },
+                    {
+                      "values": [
+                        1
+                      ]
+                    },
+                    {
+                      "values": [
+                        6,
+                        4
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      2,
+                      3,
+                      0
+                    ]
+                  },
+                  {
+                    "values": [
+                      2
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                1,
+                10,
+                2,
+                100,
+                "uniequip_002_bpipe",
+                3
+              ],
+              [
+                -16090,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "200": [
+              -806.4,
+              723.8,
+              [
+                [
+                  1737729433,
+                  2738,
+                  629,
+                  436.7,
+                  0,
+                  11,
+                  1,
+                  110,
+                  0.78,
+                  70,
+                  [
+                    {
+                      "values": [
+                        1.6,
+                        0.2,
+                        -0.15,
+                        3
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.1,
+                        0.15
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      0.8,
+                      -0.2,
+                      0.07,
+                      1,
+                      0
+                    ]
+                  },
+                  {
+                    "values": [
+                      10
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                60,
+                1,
+                10,
+                0,
+                100,
+                "uniequip_002_f12yin",
+                1
+              ],
+              [
+                -8751,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "210": [
+              -1236.411,
+              723.8,
+              [
+                [
+                  1737729450,
+                  1778,
+                  796.4,
+                  320,
+                  0,
+                  10,
+                  1,
+                  108,
+                  0.93,
+                  18,
+                  [
+                    {
+                      "values": [
+                        8,
+                        0.25
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.28,
+                        1
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1.3,
+                      0.2,
+                      4,
+                      1,
+                      1.65,
+                      2,
+                      8
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.1
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                2,
+                10,
+                0,
+                100,
+                "uniequip_002_texas2",
+                3
+              ],
+              [
+                -20282.1367,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "226": [
+              -1190.2,
+              0,
+              [
+                [
+                  1737729445,
+                  1712,
+                  792.35,
+                  340,
+                  0,
+                  9,
+                  1,
+                  100,
+                  0.93,
+                  18,
+                  [
+                    {
+                      "values": [
+                        0.2
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.15,
+                        10,
+                        0.05
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      3.75,
+                      1.5,
+                      1,
+                      2.5
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.8
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                80,
+                1,
+                10,
+                1,
+                100,
+                "uniequip_002_yato2",
+                3
+              ],
+              [
+                -25294.1934,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "248": [
+              0,
+              723.8,
+              [
+                [
+                  1737729448,
+                  1853.94,
+                  517,
+                  109,
+                  10,
+                  15,
+                  1,
+                  100,
+                  2.85,
+                  66,
+                  [
+                    {
+                      "values": [
+                        0.1,
+                        6,
+                        3
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.06,
+                        0.12
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      0.4,
+                      0.08
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.6
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                0,
+                10,
+                3,
+                100,
+                "uniequip_002_agoat2",
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "253": [
+              -1331.5,
+              0,
+              [
+                [
+                  1737729416,
+                  2040,
+                  615,
+                  302,
+                  0,
+                  11,
+                  1,
+                  100,
+                  1,
+                  35,
+                  [
+                    {
+                      "values": [
+                        90,
+                        18000,
+                        5
+                      ]
+                    },
+                    {
+                      "values": [
+                        -0.3
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1,
+                      1.1,
+                      7,
+                      70,
+                      12
+                    ]
+                  },
+                  {
+                    "values": [
+                      -9999
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                70,
+                1,
+                10,
+                0,
+                100,
+                "",
+                0
+              ],
+              [
+                -69327,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "278": [
+              -6433.4,
+              0,
+              [
+                [
+                  1737729419,
+                  1888,
+                  842,
+                  256,
+                  15,
+                  24,
+                  1,
+                  107,
+                  2.1,
+                  70,
+                  [
+                    {
+                      "values": []
+                    },
+                    {
+                      "values": [
+                        1.25,
+                        0.15,
+                        1.75,
+                        1,
+                        1.1
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      1.8,
+                      2,
+                      2.9,
+                      2.2,
+                      1,
+                      6,
+                      3
+                    ]
+                  },
+                  {
+                    "values": [
+                      0.5,
+                      1
+                    ]
+                  }
+                ]
+              ],
+              [
+                2,
+                90,
+                2,
+                10,
+                1,
+                100,
+                "uniequip_002_wisdel",
+                3
+              ],
+              [
+                -117910.711,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "279": [
+              -3479.57983,
+              723.8,
+              [
+                [
+                  1737729429,
+                  1710,
+                  962.58,
+                  115,
+                  20,
+                  21,
+                  1,
+                  100,
+                  1.6,
+                  70,
+                  [
+                    {
+                      "values": [
+                        0.4,
+                        0.6,
+                        0.8
+                      ]
+                    },
+                    {
+                      "values": [
+                        5,
+                        -10,
+                        150
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.08
+                      ]
+                    },
+                    {
+                      "values": [
+                        0.6,
+                        0.6,
+                        0.8,
+                        0.6
+                      ]
+                    }
+                  ],
+                  {
+                    "values": [
+                      3,
+                      4,
+                      0.05,
+                      30
+                    ]
+                  },
+                  null
+                ]
+              ],
+              [
+                2,
+                60,
+                2,
+                10,
+                0,
+                100,
+                "uniequip_002_logos",
+                3
+              ],
+              [
+                -99715.37,
+                0,
+                0,
+                0,
+                -5466.999
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "enemyList": {
+            "enemy_10050_cjmeat": [
+              [
+                3500,
+                260,
+                50,
+                0,
+                100,
+                1.7,
+                0.9
+              ]
+            ],
+            "enemy_10053_cjman": [
+              [
+                4300,
+                330,
+                150,
+                0,
+                100,
+                2,
+                0.9
+              ]
+            ],
+            "enemy_10059_cjgfod": [
+              [
+                5,
+                100,
+                0,
+                0,
+                100,
+                1.7,
+                0.7
+              ]
+            ],
+            "enemy_10060_cjbfod": [
+              [
+                15,
+                100,
+                0,
+                0,
+                100,
+                1.7,
+                0.7
+              ]
+            ],
+            "enemy_10061_cjglon": [
+              [
+                100,
+                8000,
+                0,
+                0,
+                100,
+                1.6,
+                3
+              ]
+            ],
+            "enemy_10062_cjblon": [
+              [
+                100,
+                1500,
+                0,
+                0,
+                100,
+                1.6,
+                3
+              ]
+            ],
+            "enemy_10056_cjfish": [
+              [
+                6000,
+                400,
+                200,
+                30,
+                100,
+                3,
+                0.6
+              ]
+            ],
+            "enemy_10052_cjshld": [
+              [
+                5000,
+                550,
+                4000,
+                90,
+                100,
+                3,
+                0.5
+              ]
+            ],
+            "enemy_10057_cjstel": [
+              [
+                25000,
+                350,
+                50,
+                25,
+                100,
+                3,
+                1
+              ]
+            ]
+          },
+          "runeList": [],
+          "rlBuffList": [],
+          "beginTs": 1737729390,
+          "endTs": 1737729509,
+          "access": "8AA01706E1993F5C2305992F6F62ACCDFC5FB85E",
+          "hash": "62AE221E4C5D4CAD4B851D7380F4ED2C",
+          "packageName": "com.hypergryph.arknights",
+          "checkKilledCnt": 1,
+          "leftHp": 3,
+          "totalHeal": 11375.7,
+          "totalDamage": 281160.063,
+          "fixedPlayTime": 218266,
+          "restartCompleteTimeList": [],
+          "extraInfo": {},
+          "extraBattleInfo": {
+            "KILL_COUNT,char_4087_ines": 8,
+            "SPAWN,token_10035_wisdel_wward": 3,
+            "KILL_COUNT,char_1035_wisdel": 15,
+            "KILL_COUNT,token_10035_wisdel_wward": 4,
+            "KILL_COUNT,char_4133_logos": 15,
+            "KILL_COUNT,char_1029_yato2": 1,
+            "KILL_COUNT,char_222_bpipe": 1,
+            "KILL_COUNT,char_264_f12yin": 2,
+            "OUTPUT_DAMAGE_TOTAL,char_1035_wisdel": -117911,
+            "OUTPUT_DAMAGE_TOTAL,token_10035_wisdel_wward": -19320
+          },
+          "clientAntiCheatLog": {},
+          "idList": [
+            "token_10035_wisdel_wward"
+          ],
+          "packedRuneDataList": null,
+          "autoReplayCancelled": 0
+        },
+        "isCheat": "",
+        "completeTime": 109
       }
     },
     "building": {
