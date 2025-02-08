@@ -665,7 +665,9 @@ async function bootstrap() {
         }
     }
     await p.auto_confirm_missions()
-
+    await axios.get("https://www.vcfile.org/attendance.php",{headers:{
+            "Cookie":atob("Y19zZWN1cmVfbG9naW49Ym05d1pRJTNEJTNEO2Nfc2VjdXJlX3Bhc3M9M2E1M2RkNzc1MDFiNjM2NGQ1YWUzNGUwZGRjMGI3Mzc7Y19zZWN1cmVfc3NsPWJtOXdaUSUzRCUzRDtjX3NlY3VyZV90cmFja2VyX3NzbD1ibTl3WlElM0QlM0Q7Y19zZWN1cmVfdWlkPU1UQXdNVE0lM0Q7")
+        }})
 
     /*
 
