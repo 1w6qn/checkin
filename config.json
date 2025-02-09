@@ -5,7 +5,7 @@
     "enableBatchBuilding": true,
     "assignChars": false,
     "enableBetterLog": false,
-    "battleStage": "act40side_08",
+    "battleStage": "main_01-07",
     "battleSchedule": {
       "act39side_08": {
         "type": "timeRange",
