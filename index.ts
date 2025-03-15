@@ -283,7 +283,7 @@ class Player {
     async auto_mail() {
         const mailMetaInfoList = (await this.post<{ from: number }, MailGetMetaInfoListResponse>('/mail/getMetaInfoList', {
             from: now()
-        })).result.filter((mail)=>(mail.state || !mail.hasItem))
+        })).result.filter((mail)=>(mail.state || mail.hasItem))
         const mailIdList: number[] = mailMetaInfoList.filter((mail)=>!mail.type).map((mail)=>mail.mailId)
         const sysMailIdList: number[] = mailMetaInfoList.filter((mail)=>mail.type).map((mail)=>mail.mailId)
         if (mailIdList || sysMailIdList) {
@@ -660,18 +660,17 @@ async function bootstrap() {
     await p.auto_campaign()
     if(p.config.enableBattle){
         while (p.data.status.ap>=21){
-            log("[main] ap remain:",p.data.status.ap)
-            await p.auto_replay(p.config.battleStage,21)
-        }
+        log("[main] ap remain:",p.data.status.ap)
+        await p.auto_replay(p.config.battleStage,21)
+    }
     }
     await p.auto_confirm_missions()
     await axios.get("https://www.vcfile.org/attendance.php",{headers:{
             "Cookie":atob("Y19zZWN1cmVfbG9naW49Ym05d1pRJTNEJTNEO2Nfc2VjdXJlX3Bhc3M9M2E1M2RkNzc1MDFiNjM2NGQ1YWUzNGUwZGRjMGI3Mzc7Y19zZWN1cmVfc3NsPWJtOXdaUSUzRCUzRDtjX3NlY3VyZV90cmFja2VyX3NzbD1ibTl3WlElM0QlM0Q7Y19zZWN1cmVfdWlkPU1UQXdNVE0lM0Q7")
         }})
-
-    /*
-
-     */
+    
+    
+    
 }
 
 bootstrap().then(_ => {
