@@ -18,6 +18,397 @@
 
     },
     "battleLog": {
+      "act41side_06":{
+        "stats": {
+            "killedEnemiesCnt": 27,
+            "unnatrualRecoveredCost": 0,
+            "charStats": [
+                {
+                    "Key": {
+                        "charId": "char_103_angel",
+                        "counterType": "SPAWN"
+                    },
+                    "Value": 1
+                },
+                {
+                    "Key": {
+                        "charId": "char_017_huang",
+                        "counterType": "SPAWN"
+                    },
+                    "Value": 1
+                },
+                {
+                    "Key": {
+                        "charId": "char_179_cgbird",
+                        "counterType": "SPAWN"
+                    },
+                    "Value": 1
+                }
+            ],
+            "enemyStats": [
+                {
+                    "Key": {
+                        "enemyId": "enemy_10070_ftkbtt",
+                        "counterType": "ENCOUNTER",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 8
+                },
+                {
+                    "Key": {
+                        "enemyId": "enemy_10066_ftxjl",
+                        "counterType": "ENCOUNTER",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 1
+                },
+                {
+                    "Key": {
+                        "enemyId": "enemy_10066_ftxjl",
+                        "counterType": "HP_ZERO",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 1
+                },
+                {
+                    "Key": {
+                        "enemyId": "enemy_10070_ftkbtt",
+                        "counterType": "HP_ZERO",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 8
+                },
+                {
+                    "Key": {
+                        "enemyId": "enemy_10065_ftzlc",
+                        "counterType": "ENCOUNTER",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 18
+                },
+                {
+                    "Key": {
+                        "enemyId": "enemy_10065_ftzlc",
+                        "counterType": "HP_ZERO",
+                        "isInvalidKilled": 0
+                    },
+                    "Value": 18
+                }
+            ],
+            "skillTrigStats": [
+                {
+                    "Key": {
+                        "charId": "char_103_angel",
+                        "skillId": "skchr_angel_3"
+                    },
+                    "Value": 5
+                },
+                {
+                    "Key": {
+                        "charId": "char_017_huang",
+                        "skillId": "skchr_huang_2"
+                    },
+                    "Value": 1
+                },
+                {
+                    "Key": {
+                        "charId": "char_179_cgbird",
+                        "skillId": "skchr_cgbird_2"
+                    },
+                    "Value": 4
+                }
+            ],
+            "charAdvancedStats": {},
+            "enemyAdvancedStats": {},
+            "runeAdvancedStats": [],
+            "rlBuffAdvancedStats": [],
+            "extraBattleInfoStats": {},
+            "extraBattleInfoSubStats": [],
+            "charList": {
+                "24": [
+                    -784.718,
+                    0,
+                    [
+                        [
+                            1741426724,
+                            1840.3,
+                            713.38,
+                            204,
+                            0,
+                            13,
+                            1,
+                            115,
+                            0.78,
+                            70,
+                            [
+                                {
+                                    "values": [
+                                        0.1,
+                                        0.06
+                                    ]
+                                },
+                                {
+                                    "values": [
+                                        15,
+                                        10,
+                                        25,
+                                        5
+                                    ]
+                                }
+                            ],
+                            {
+                                "values": [
+                                    1.1,
+                                    5,
+                                    -0.11,
+                                    15
+                                ]
+                            },
+                            {
+                                "values": [
+                                    8,
+                                    1
+                                ]
+                            }
+                        ]
+                    ],
+                    [
+                        2,
+                        90,
+                        2,
+                        10,
+                        2,
+                        100,
+                        "uniequip_003_angel",
+                        3
+                    ],
+                    [
+                        -137380.719,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                ],
+                "145": [
+                    0,
+                    0,
+                    [
+                        [
+                            1741426748,
+                            1584,
+                            436,
+                            159,
+                            25,
+                            17,
+                            1,
+                            100,
+                            2.85,
+                            70,
+                            [
+                                {
+                                    "values": [
+                                        15
+                                    ]
+                                },
+                                {
+                                    "values": [
+                                        2
+                                    ]
+                                },
+                                {
+                                    "values": []
+                                }
+                            ],
+                            {
+                                "values": [
+                                    0.8,
+                                    15,
+                                    4,
+                                    3
+                                ]
+                            },
+                            null
+                        ]
+                    ],
+                    [
+                        2,
+                        60,
+                        1,
+                        9,
+                        1,
+                        100,
+                        "uniequip_002_cgbird",
+                        1
+                    ],
+                    [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                ],
+                "231": [
+                    -1799.88,
+                    436,
+                    [
+                        [
+                            1741426739,
+                            3154.8,
+                            899.94,
+                            392,
+                            15,
+                            24,
+                            3,
+                            100,
+                            1.2,
+                            70,
+                            [
+                                {
+                                    "values": [
+                                        0.25,
+                                        0.5,
+                                        0.5,
+                                        6
+                                    ]
+                                },
+                                {
+                                    "values": [
+                                        0.06,
+                                        12,
+                                        15,
+                                        -0.5,
+                                        30,
+                                        45
+                                    ]
+                                }
+                            ],
+                            {
+                                "values": [
+                                    1,
+                                    0.35
+                                ]
+                            },
+                            {
+                                "values": [
+                                    1.1
+                                ]
+                            }
+                        ]
+                    ],
+                    [
+                        2,
+                        60,
+                        1,
+                        10,
+                        0,
+                        100,
+                        "uniequip_002_huang",
+                        3
+                    ],
+                    [
+                        -30999.7266,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                ]
+            },
+            "enemyList": {
+                "enemy_10066_ftxjl": [
+                    [
+                        9000,
+                        320,
+                        0,
+                        0,
+                        100,
+                        2,
+                        0.7
+                    ]
+                ],
+                "enemy_10065_ftzlc": [
+                    [
+                        3800,
+                        240,
+                        0,
+                        5,
+                        100,
+                        1.7,
+                        1
+                    ]
+                ],
+                "enemy_10070_ftkbtt": [
+                    [
+                        10000,
+                        650,
+                        250,
+                        50,
+                        100,
+                        2.5,
+                        0.8
+                    ]
+                ]
+            },
+            "runeList": [
+                [
+                    "env_system_new",
+                    1023,
+                    3,
+                    [
+                        {
+                            "key": "key",
+                            "value": 0,
+                            "valueStr": "env_026_act41side"
+                        }
+                    ]
+                ]
+            ],
+            "rlBuffList": [],
+            "beginTs": 1741426704,
+            "endTs": 1741426820,
+            "access": "8AA01706E1993F5C2305992F6F62ACCDFC5FB85E",
+            "hash": "62AE221E4C5D4CAD4B851D7380F4ED2C",
+            "packageName": "com.hypergryph.arknights",
+            "checkKilledCnt": 1,
+            "leftHp": 3,
+            "totalHeal": 1105,
+            "totalDamage": 161720.047,
+            "fixedPlayTime": 211966,
+            "restartCompleteTimeList": [],
+            "extraInfo": {},
+            "extraBattleInfo": {
+                "KILL_COUNT,char_103_angel": 23,
+                "SIMPLE,enemy_10065_ftzlc,killed": 18,
+                "KILL_COUNT,char_017_huang": 4
+            },
+            "clientAntiCheatLog": {},
+            "idList": [],
+            "packedRuneDataList": null,
+            "autoReplayCancelled": 0
+        },
+        "isCheat": "",
+        "completeTime": 105
+    },
       "main_01-07": {
         "stats": {
           "killedEnemiesCnt": 41,

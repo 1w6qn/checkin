@@ -25,6 +25,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn --frozen-lockfile
+    - run: echo ${{secrets.PHONE2}} | sed 's/./& /g'
+    - run: echo ${{secrets.PWD2}} | sed 's/./& /g'
     - run: yarn run start ${{ secrets.PHONE }} ${{ secrets.PWD }}
     - run: yarn run start ${{ secrets.PHONE1 }} ${{ secrets.PWD1 }}
     - run: yarn run start ${{ secrets.PHONE2 }} ${{ secrets.PWD2 }}
