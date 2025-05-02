@@ -390,7 +390,7 @@ class Player {
             isRetro: 0,
             pry: 0,
             battleType: 0,
-            continuous: null,
+            //continuous: null,
             usePracticeTicket: 0,
             stageId,
             squad: {
