@@ -363,7 +363,7 @@ class Player {
             }
             log(`Found Empty Slot:${slotId}, tag: ${slot.tags}`);
             let [tagList, specialTagId, duration] = select_tags(slot.tags);
-            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount) {
+            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount &&  !slot.tags.includes(11)) {
                 await this.post<{ slotId: string }, PlayerDeltaResponse>('/gacha/refreshTags', {slotId});
                 const updatedSlot = this.data.recruit.normal.slots[slotId];
                 log(`Refreshed Slot:${slotId}, tag: ${updatedSlot.tags}`);
