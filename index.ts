@@ -109,18 +109,18 @@ class Player {
     async auto_checkin() {
         if (this.data.checkIn.canCheckIn) {
             await this.post('/user/checkIn', {})
-            log("已完成签到")
+            log("[活动]已完成签到")
         }
         for (const [activityId, v] of Object.entries(this.data.activity.LOGIN_ONLY)) {
-            log("发现LOGIN_ONLY活动",activityId)
+            log("[活动]发现LOGIN_ONLY活动",activityId)
 
             if (v.reward) {
                 await this.post('/activity/loginOnly/getReward', {activityId})
-                log("[activity][LOGIN_ONLY] getReward",activityId)
+                log("[活动][LOGIN_ONLY] getReward",activityId)
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.CHECKIN_ONLY)) {
-            log("发现CHECKIN_ONLY活动",activityId)
+            log("[活动]发现CHECKIN_ONLY活动",activityId)
             if (v.dynOpt){
                 continue
             }
@@ -128,31 +128,31 @@ class Player {
                 if(v1){
                     const index = v.history.indexOf(v1);
                     await this.post('/activity/getActivityCheckInReward', {activityId, index})
-                    log("[activity][CHECKIN_ONLY] getReward",activityId, index)
+                    log("[活动][CHECKIN_ONLY] getReward",activityId, index)
                 }
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.CHECKIN_ACCESS)) {
-            log("发现CHECKIN_ACCESS活动",activityId)
+            log("[活动]发现CHECKIN_ACCESS活动",activityId)
             if (v.currentStatus) {
                 await this.post('/activity/actCheckinAccess/getCheckInReward', {activityId})
-                log("[activity][CHECKIN_ACCESS] getReward",activityId)
+                log("[活动][CHECKIN_ACCESS] getReward",activityId)
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.GRID_GACHA_V2)) {
-            log("发现GRID_GACHA_V2活动",activityId)
+            log("[活动]发现GRID_GACHA_V2活动",activityId)
             if (!v.today.done) {
                 await this.post('/activity/gridGachaV2/doTodayGacha', {activityId})
-                log("[activity][GRID_GACHA_V2] doTodayGacha",activityId)
+                log("[活动][GRID_GACHA_V2] doTodayGacha",activityId)
             }
         }
         for (const [activityId, v] of Object.entries(this.data.activity.PRAY_ONLY)) {
-            log("发现PRAY_ONLY活动",activityId)
+            log("[活动]发现PRAY_ONLY活动",activityId)
             if (!v.praying) {
                 let prayArray=[1,2]
                 if(v.extraCount==1)prayArray=[1,2,3]
                 await this.post('/activity/prayOnly/getReward', {prayArray,activityId})
-                log("[activity][PRAY_ONLY] getReward",activityId)
+                log("[活动][PRAY_ONLY] getReward",activityId)
             }
         }
     }
@@ -287,12 +287,12 @@ class Player {
         const mailIdList: number[] = mailMetaInfoList.filter((mail)=>!mail.type).map((mail)=>mail.mailId)
         const sysMailIdList: number[] = mailMetaInfoList.filter((mail)=>mail.type).map((mail)=>mail.mailId)
         if (mailIdList || sysMailIdList) {
-            log("发现未领取邮件")
+            log("[邮件]发现未领取邮件")
             await this.post('/mail/receiveAllMail', {
                 mailIdList,
                 sysMailIdList
             })
-            log("已收取所有邮件", mailIdList, sysMailIdList)
+            log("[邮件]已收取所有邮件", mailIdList, sysMailIdList)
         }
     }
 
@@ -313,7 +313,7 @@ class Player {
         for (const id of id_list) {
             if (j < 10) {
                 await this.post('/building/visitBuilding', {friendId: id.uid})
-                log("[building] visit",id.uid)
+                log("[基建] 访问好友",id.uid)
                 j += 1
             }
         }
@@ -329,17 +329,17 @@ class Player {
         for (const stock of this.data.building.rooms.MEETING["slot_36"].ownStock) {
             if(!Object.keys(this.data.building.rooms.MEETING["slot_36"].board).includes(stock.type)){
                 await this.post('/building/putClueToTheBoard', {clueId:stock.id})
-                log("[building] put",stock.type,"to the board")
+                log("[基建] 已放置线索",stock.type)
             }
         }
 
         if (Object.keys(this.data.building.rooms.MEETING["slot_36"].board).length == 7) {
             await this.post('/building/startInfoShare', {})
-            log("[building] startInfoShare")
+            log("[基建] 开始信赖交流")
         }
         if (this.data.social.yesterdayReward.canReceive) {
             await this.post("/social/receiveSocialPoint", {})
-            log("[building] receiveSocialPoint")
+            log("[基建] 获取信用点完成")
 
         }
 
@@ -358,39 +358,42 @@ class Player {
             if (!slot.state) continue;
             if (slot.maxFinishTs > now()) continue;
             if (slot.state === 2) {
-                log(`Found Unconfirmed Recruit:slot${slotId}`);
+                log(`[公开招募]发现已完成公招：Slot#${slotId}`);
                 await this.post('/gacha/finishNormalGacha', {slotId: slotId});
             }
             log(`Found Empty Slot:${slotId}, tag: ${slot.tags}`);
             let [tagList, specialTagId, duration] = select_tags(slot.tags);
-            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount &&  !slot.tags.includes(11)) {
+            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount) {
                 await this.post<{ slotId: string }, PlayerDeltaResponse>('/gacha/refreshTags', {slotId});
                 const updatedSlot = this.data.recruit.normal.slots[slotId];
-                log(`Refreshed Slot:${slotId}, tag: ${updatedSlot.tags}`);
+                log(`[公开招募]刷新公招Slot:${slotId}, tag: ${updatedSlot.tags}`);
                 [tagList, specialTagId, duration] = select_tags(updatedSlot.tags);
             }
             if (specialTagId !== 11) {
                 await this.post('/gacha/normalGacha', {
                     slotId, tagList, specialTagId, duration
                 });
+            }else{
+                log(`[公开招募]发现高级资深tag：Slot#${slotId}`);
             }
         }
     }
 
-    async auto_replay(stageId:string,apCost:number) {
-        if(this.data.status.ap<apCost){
+    async auto_replay(stageId:string,apCost:number,times:number) {
+        let t=times<=6?times:6
+        if(this.data.status.ap<apCost*t){
             return
         }
         const {battleReplay} = await this.post<
             { stageId: string }, { battleReplay: string }
         >("/quest/getBattleReplay", {stageId})
-        log("[battle]获取到录像", stageId)
+        log("[战斗]获取到录像", stageId)
         const battleLog = await decryptBattleReplay(battleReplay)
         const {battleId} = await this.post<any, QuestBattleStartResponse>("/quest/battleStart", {
             isRetro: 0,
             pry: 0,
-            battleType: 0,
-            //continuous: null,
+            battleType: 2,
+            multiple: {battleTimes:t},
             usePracticeTicket: 0,
             stageId,
             squad: {
@@ -412,7 +415,7 @@ class Player {
             isReplay: 1,
             startTs: now()
         })
-        log("[battle]战斗开始", stageId, battleId)
+        log("[战斗]战斗开始", stageId, battleId)
         const battleStats = this.config.battleLog[stageId]
         battleStats.stats.access = getBattleDataAccess(this.data.pushFlags.status)
         battleStats.isCheat = encryptIsCheat(battleId)
@@ -439,22 +442,22 @@ class Player {
                 completeTime: battleStats.completeTime
             }
         })
-        log("[battle]战斗结束", battleId)
+        log("[战斗]战斗结束", battleId)
     }
 
     async auto_building() {
         await this.post("/building/gainAllIntimacy", {})
-        log("[building] gainAllIntimacy")
+        log("[基建]获取干员信赖完成")
         await this.post('/building/settleManufacture', {
             roomSlotIdList: Object.keys(this.data.building.rooms.MANUFACTURE),
             supplement: 1
         })
-        log("[building] settleManufacture")
+        log("[基建]获取制造站收益完成")
 
         await this.post("/building/deliveryBatchOrder", {
             slotList: Object.keys(this.data.building.rooms.TRADING)
         })
-        log("[building] deliveryBatchOrder")
+        log("[基建]获取贸易站收益完成")
         if(this.config.assignChars){
             let [_,config]=Object.entries(this.config.building).find(
                 ([condition,_])=> eval(condition)
@@ -467,12 +470,12 @@ class Player {
                     )
                 })
             }
-            log("[building] assign chars")
+            log("[基建]换班完成")
         }
         if(this.config.enableBatchBuilding){
             await this.post("/building/batchChangeWorkChar", {})
             await this.post("/building/batchRestChar", {})
-            log("[building] 自动换班完成")
+            log("[基建]自动换班完成")
         }
 
     }
@@ -498,7 +501,7 @@ class Player {
     async auto_gacha() {
         for (const [poolId, v] of Object.entries(this.data.gacha.limit)) {
             if (v.leastFree) {
-                log("发现每日单抽",poolId)
+                log("[限时寻访]发现每日单抽",poolId)
                 await this.post("/gacha/advancedGacha", {
                     poolId,
                     useTkt: 3,
@@ -548,7 +551,7 @@ class Player {
             itemId: "EXTERMINATION_AGENT",
             instId
         })
-        log("[battle] 完成剿灭扫荡",stageId)
+        log("[战斗]完成剿灭扫荡",stageId)
     }
 
     async syncData() {
@@ -637,7 +640,7 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
     };
     get_token_req.sign = u8_sign(get_token_req);
     const res3 = await axios.post<any, GetTokenResponse>("https://as.hypergryph.com/u8/user/v1/getToken", get_token_req)
-    return {token: res3.data.token, uid: res3.data.uid};
+    return res3.data;
 }
 
 async function bootstrap() {
@@ -658,12 +661,12 @@ async function bootstrap() {
         await p.auto_recruit()
     }
     await p.auto_campaign()
-    if(p.config.enableBattle){
-        while (p.data.status.ap>=21){
-        log("[main] ap remain:",p.data.status.ap)
-        await p.auto_replay(p.config.battleStage,21)
+    while(p.config.enableBattle && p.data.status.ap>=6){
+        let times=Math.floor(p.data.status.ap/6)
+        await p.auto_replay(p.config.battleStage,6,times)
+        //p.printStatus()
     }
-    }
+    p.printStatus()
     await p.auto_confirm_missions()
     await axios.get("https://www.vcfile.org/attendance.php",{headers:{
             "Cookie":atob("Y19zZWN1cmVfbG9naW49Ym05d1pRJTNEJTNEO2Nfc2VjdXJlX3Bhc3M9M2E1M2RkNzc1MDFiNjM2NGQ1YWUzNGUwZGRjMGI3Mzc7Y19zZWN1cmVfc3NsPWJtOXdaUSUzRCUzRDtjX3NlY3VyZV90cmFja2VyX3NzbD1ibTl3WlElM0QlM0Q7Y19zZWN1cmVfdWlkPU1UQXdNVE0lM0Q7")
