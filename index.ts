@@ -363,7 +363,7 @@ class Player {
             }
             log(`Found Empty Slot:${slotId}, tag: ${slot.tags}`);
             let [tagList, specialTagId, duration] = select_tags(slot.tags);
-            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount) {
+            if (tagList.length === 0 && this.data.building.rooms.HIRE["slot_23"].refreshCount && !slot.tags.includes(11)) {
                 await this.post<{ slotId: string }, PlayerDeltaResponse>('/gacha/refreshTags', {slotId});
                 const updatedSlot = this.data.recruit.normal.slots[slotId];
                 log(`[公开招募]刷新公招Slot:${slotId}, tag: ${updatedSlot.tags}`);
@@ -381,6 +381,9 @@ class Player {
 
     async auto_replay(stageId:string,apCost:number,times:number) {
         let t=times<=6?times:6
+        if(t<=1){
+            return
+        }
         if(this.data.status.ap<apCost*t){
             return
         }
@@ -661,7 +664,7 @@ async function bootstrap() {
         await p.auto_recruit()
     }
     await p.auto_campaign()
-    while(p.config.enableBattle && p.data.status.ap>=6){
+    while(p.config.enableBattle && p.data.status.ap>=12){
         let times=Math.floor(p.data.status.ap/6)
         await p.auto_replay(p.config.battleStage,6,times)
         //p.printStatus()
