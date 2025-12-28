@@ -628,9 +628,9 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
     const res2 = await axios.post("https://as.hypergryph.com/user/oauth2/v2/grant", {
         token: token1,
         appCode: "7318def77669979d",
-        type: 2
+        type: 1
     })
-    const token2 = res2.data.data.code;
+    const token2 = res2.data.data.token;
     const get_token_req: { [key: string]: any } = {
         appId: "1",
         channelId: "1",
