@@ -634,7 +634,7 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
     const get_token_req: { [key: string]: any } = {
         appId: "1",
         channelId: "1",
-        extension: JSON.stringify({code: token2, isSuc: true, type: 1}),
+        extension: JSON.stringify({code: token2, isSuc: true, type: 0}),
         worldId: "1",
         platform: 1,
         subChannel: "1",
