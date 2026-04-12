@@ -29,8 +29,6 @@ import {
     ResVersionResponse
 } from "./models";
 import {floor} from "lodash";
-
-
 const phone = process.argv[2];
 const pwd = process.argv[3];
 
