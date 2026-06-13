@@ -1,5 +1,3 @@
-import axios, {AxiosError} from 'axios';
-
 import {PlayerDataDelta, PlayerDataModel} from 'dto';
 import config from "./config.json"
 import {
@@ -87,6 +85,7 @@ class Player {
         const resVersion = await get_res_version();
         log(`assetsVersion:${resVersion.resVersion}, clientVersion:${resVersion.clientVersion}`);
         const {deviceId, deviceId2, deviceId3} = get_random_devices()
+
         const {token, uid} = await get_token(deviceId, deviceId2, deviceId3, phone, pwd);
         this.uid = uid
         log(`uid:${uid}, access_token:${token}`);
@@ -585,28 +584,34 @@ class Player {
         }
         const url = 'https://ak-gs-gf.hypergryph.com' + cgi;
         try{
-            const response = await axios.post(url, data, {headers: headers});
-            if (response.headers['seqnum'] && !isNaN(Number(response.headers['seqnum']))) {
-                this.seqnum = Number(response.headers['seqnum'])
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const seqnumHeader = response.headers.get('seqnum');
+            if (seqnumHeader && !isNaN(Number(seqnumHeader))) {
+                this.seqnum = Number(seqnumHeader)
             } else {
                 this.seqnum += 1;
             }
-            if (response.data.user !== undefined) {
-                this.data = response.data.user
+            const responseData = await response.json();
+            if (!responseData || typeof responseData !== 'object') {
+                throw new Error('Invalid response data');
             }
-            if (response.data.playerDataDelta !== undefined) {
-                this.merge(response.data.playerDataDelta)
+            if (responseData.user !== undefined) {
+                this.data = responseData.user
             }
-            return response.data;
+            if (responseData.playerDataDelta !== undefined) {
+                this.merge(responseData.playerDataDelta)
+            }
+            return responseData;
         }catch (err) {
-            let error = err as AxiosError;
-            if (error.response) {
-                console.log(error.response.data);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log('Error', error.message);
-            }
+            let error = err as Error;
+            console.log('Error', error.message);
         }
         return {} as T
 
@@ -614,21 +619,46 @@ class Player {
 }
 
 async function get_res_version(): Promise<ResVersionResponse> {
-    return (await axios.get("https://ak-conf.hypergryph.com/config/prod/official/Android/version")).data;
+    const response = await fetch("https://ak-conf.hypergryph.com/config/prod/official/Android/version");
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!data || typeof data !== 'object' || !data.resVersion || !data.clientVersion) {
+        throw new Error('Invalid response data from get_res_version');
+    }
+    return data as ResVersionResponse;
 }
 
 async function get_token(deviceId: string, deviceId2: string, deviceId3: string, phone: string, pwd: string) {
-    const res1 = await axios.post("https://as.hypergryph.com/user/auth/v1/token_by_phone_password", {
-        phone: phone,
-        password: pwd
-    })
-    const token1 = res1.data.data.token;
-    const res2 = await axios.post("https://as.hypergryph.com/user/oauth2/v2/grant", {
-        token: token1,
-        appCode: "7318def77669979d",
-        type: 1
-    })
-    const token2 = res2.data.data.token;
+    const res1 = await fetch("https://as.hypergryph.com/user/auth/v1/token_by_phone_password", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone, password: pwd })
+    });
+    if (!res1.ok) {
+        throw new Error(`HTTP error! status: ${res1.status}`);
+    }
+    const data1 = await res1.json();
+    if (!data1 || !data1.data || !data1.data.token) {
+        throw new Error('Failed to get token1: invalid response');
+    }
+    const token1 = data1.data.token;
+    
+    const res2 = await fetch("https://as.hypergryph.com/user/oauth2/v2/grant", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: token1, appCode: "7318def77669979d", type: 1 })
+    });
+    if (!res2.ok) {
+        throw new Error(`HTTP error! status: ${res2.status}`);
+    }
+    const data2 = await res2.json();
+    if (!data2 || !data2.data || !data2.data.token) {
+        throw new Error('Failed to get token2: invalid response');
+    }
+    const token2 = data2.data.token;
+    
     const get_token_req: { [key: string]: any } = {
         appId: "1",
         channelId: "1",
@@ -641,8 +671,17 @@ async function get_token(deviceId: string, deviceId2: string, deviceId3: string,
         deviceId3
     };
     get_token_req.sign = u8_sign(get_token_req);
-    const res3 = await axios.post<any, GetTokenResponse>("https://as.hypergryph.com/u8/user/v1/getToken", get_token_req)
-    return res3.data;
+    
+    const res3 = await fetch("https://as.hypergryph.com/u8/user/v1/getToken", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(get_token_req)
+    });
+    if (!res3.ok) {
+        throw new Error(`HTTP error! status: ${res3.status}`);
+    }
+    const data3 = await res3.json();
+    return data3;
 }
 
 async function bootstrap() {
@@ -651,29 +690,35 @@ async function bootstrap() {
         return
     }
     const p = new Player()
-    await p.init(phone, pwd)
-    //await p.auto_ra()
-    await p.auto_checkin()
-    await p.auto_mail()
-    await p.auto_gacha()
-    await p.auto_building()
-    await p.auto_social()
-    await p.auto_buy()
-    if(p.config.enableRecruit){
-        await p.auto_recruit()
+    try {
+        await p.init(phone, pwd)
+        //await p.auto_ra()
+        await p.auto_checkin()
+        await p.auto_mail()
+        await p.auto_gacha()
+        await p.auto_building()
+        await p.auto_social()
+        await p.auto_buy()
+        if(p.config.enableRecruit){
+            await p.auto_recruit()
+        }
+        await p.auto_campaign()
+        while(p.config.enableBattle && p.data.status.ap>=12){
+            let times=Math.floor(p.data.status.ap/6)
+            await p.auto_replay(p.config.battleStage,6,times)
+            //p.printStatus()
+        }
+        p.printStatus()
+        await p.auto_confirm_missions()
+        log("[main] 已完成")
+    } catch (err) {
+        let error = err as Error;
+        log("[main] 执行失败:", error.message);
+        console.error("Error details:", err);
     }
-    await p.auto_campaign()
-    while(p.config.enableBattle && p.data.status.ap>=12){
-        let times=Math.floor(p.data.status.ap/6)
-        await p.auto_replay(p.config.battleStage,6,times)
-        //p.printStatus()
-    }
-    p.printStatus()
-    await p.auto_confirm_missions()
-    
 }
 
-bootstrap().then(_ => {
-    log("[main] 已完成")
+bootstrap().catch(err => {
+    console.error("Unexpected error:", err);
 });
 
