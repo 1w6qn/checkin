@@ -26,7 +26,6 @@ import {
     PlayerDeltaResponse, QuestBattleStartResponse,
     ResVersionResponse
 } from "./models";
-import {floor} from "lodash";
 const phone = process.argv[2];
 const pwd = process.argv[3];
 
@@ -559,7 +558,7 @@ class Player {
         await this.post<AccountSyncDataRequest, AccountSyncDataResponse>("/account/syncData", {
             platform: 1
         })
-        this.data.status.ap+=floor((now()-this.data.status.lastApAddTime)/360)
+        this.data.status.ap += Math.floor((now() - this.data.status.lastApAddTime) / 360)
         if(this.data.status.ap>this.data.status.maxAp){
             this.data.status.ap=this.data.status.maxAp
         }
