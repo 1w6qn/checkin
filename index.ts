@@ -63,14 +63,10 @@ class Player {
     }
     printStatus(){
         const status=this.data.status
-        log(`${status.nickName}#${status.nickNumber}`)
-        log(`uid：${status.uid}`)
         log(`等级：${status.level}(${status.exp})/120`)
         log(`理智：${status.ap}/${status.maxAp}`)
         log(`源石：${status.androidDiamond}`)
         log(`赤金：${status.gold}`)
-        log(`签名：${status.resume}`)
-        log(`助理：${status.secretary}`)
         log(`信用点：${status.socialPoint}`)
         log(`绿票：${status.lggShard}`)
         log(`黄票：${status.hggShard}`)
