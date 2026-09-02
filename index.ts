@@ -86,7 +86,7 @@ class Player {
 
         const {token, uid} = await get_token(deviceId, deviceId2, deviceId3, phone, pwd);
         this.uid = uid
-        log(`uid:${uid}, access_token:${token}`);
+        log(`uid:${uid}`);
         this.secret = (await this.post<AccountLoginRequest, AccountLoginResponse>("/account/login", {
             networkVersion: "5",
             uid,
@@ -98,7 +98,6 @@ class Player {
             deviceId2,
             deviceId3
         })).secret
-        log(`[main] secret`,this.secret);
         await this.syncData()
     }
 
