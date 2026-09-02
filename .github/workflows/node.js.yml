@@ -19,14 +19,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: 清理历史 Runs
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        # 删除本 workflow 之前的已完成 run（跳过当前正在运行的 run）
+        gh run list --workflow=node.js.yml --status=completed --limit 1000 \
+          --json databaseId -q '.[].databaseId' | while read -r id; do
+            if [ "$id" != "${{ github.run_id }}" ]; then
+              echo "删除历史 run $id"
+              gh run delete "$id" || true
+            fi
+          done
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn --frozen-lockfile
-    - run: echo ${{secrets.PHONE2}} | sed 's/./& /g'
-    - run: echo ${{secrets.PWD2}} | sed 's/./& /g'
     - run: yarn run start ${{ secrets.PHONE }} ${{ secrets.PWD }}
     - run: yarn run start ${{ secrets.PHONE1 }} ${{ secrets.PWD1 }}
     - run: yarn run start ${{ secrets.PHONE2 }} ${{ secrets.PWD2 }}
